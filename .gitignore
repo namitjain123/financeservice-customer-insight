@@ -1,0 +1,16 @@
+# Intermediate extraction pool - 1 GB, regenerate with scripts/extract_from_bulk.py
+data/cfpb_filtered.csv
+
+# Raw CFPB bulk download
+*.csv.zip
+
+# Cached embeddings from the k-sweep
+*.npz
+topic_embeddings.npz
+
+.env
+__pycache__/
+venv/
+.venv/
+data/input.csv
+data/ground_truth.csv

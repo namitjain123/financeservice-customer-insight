@@ -1,0 +1,660 @@
+Using pip 25.3 from C:\Users\namit\.virtualenvs\namit-pGzEMgyL\lib\site-packages\pip (python 3.10)
+Collecting agent-framework
+  Obtaining dependency information for agent-framework from https://files.pythonhosted.org/packages/0f/fb/93ae2e233bd94a8ba218391de1df437941ec32b92c8a75a72a91dc079182/agent_framework-1.12.1-py3-none-any.whl.metadata
+  Downloading agent_framework-1.12.1-py3-none-any.whl.metadata (9.5 kB)
+Collecting agent-framework-core==1.12.1 (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-core==1.12.1 from https://files.pythonhosted.org/packages/d5/d9/c3d3bd7a40c314cb196db6d27120d941f2b1ba11e14f73bdbc5d451a0653/agent_framework_core-1.12.1-py3-none-any.whl.metadata
+  Downloading agent_framework_core-1.12.1-py3-none-any.whl.metadata (10 kB)
+Collecting typing-extensions<5,>=4.15.0 (from agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for typing-extensions<5,>=4.15.0 from https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl.metadata
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Requirement already satisfied: pydantic<3,>=2 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework) (2.11.4)
+Requirement already satisfied: python-dotenv<2,>=1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework) (1.0.1)
+Collecting opentelemetry-api<2,>=1.39.0 (from agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for opentelemetry-api<2,>=1.39.0 from https://files.pythonhosted.org/packages/ca/6f/a04e900f465ff3221ccc395522503e2d10e79fa21f2723c8e177aae1e0d1/opentelemetry_api-1.44.0-py3-none-any.whl.metadata
+  Downloading opentelemetry_api-1.44.0-py3-none-any.whl.metadata (1.4 kB)
+Collecting mcp<2,>=1.24.0 (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for mcp<2,>=1.24.0 from https://files.pythonhosted.org/packages/e2/5e/d118fce19f87a2e7d8101c35c8ae0ec289098a4df0ff244cec23e415aca0/mcp-1.28.1-py3-none-any.whl.metadata
+  Downloading mcp-1.28.1-py3-none-any.whl.metadata (9.4 kB)
+Collecting agent-framework-a2a (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-a2a from https://files.pythonhosted.org/packages/bb/d0/573df1d4e0a1e5f219d400d227fcddbfaf3e51dae81af114223bb599f1ef/agent_framework_a2a-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_a2a-1.0.0b260721-py3-none-any.whl.metadata (3.6 kB)
+Collecting agent-framework-ag-ui (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-ag-ui from https://files.pythonhosted.org/packages/dd/a3/c4aed3d2955f97c46fb20157dd0f9ed6743ab89ed78ecc44e98a04ad5175/agent_framework_ag_ui-1.0.0-py3-none-any.whl.metadata
+  Downloading agent_framework_ag_ui-1.0.0-py3-none-any.whl.metadata (19 kB)
+Collecting agent-framework-anthropic (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-anthropic from https://files.pythonhosted.org/packages/6f/84/c96985a3c25bf56cd527fbb2b770648b4f5cffbe91f1bd05f17985f8bf31/agent_framework_anthropic-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_anthropic-1.0.0b260721-py3-none-any.whl.metadata (2.6 kB)
+Collecting agent-framework-azure-ai-search (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-azure-ai-search from https://files.pythonhosted.org/packages/18/cd/24b6eb346186e283f86ce9a71785e9ea92250d9c409c2a7b728baa414a44/agent_framework_azure_ai_search-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_azure_ai_search-1.0.0b260721-py3-none-any.whl.metadata (3.0 kB)
+Collecting agent-framework-azure-contentunderstanding (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-azure-contentunderstanding from https://files.pythonhosted.org/packages/af/21/24c85d0e5547f1fd57626e6e26f68d7406de53065b6efaea649ad9e497c9/agent_framework_azure_contentunderstanding-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_azure_contentunderstanding-1.0.0b260721-py3-none-any.whl.metadata (7.5 kB)
+Collecting agent-framework-azure-cosmos (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-azure-cosmos from https://files.pythonhosted.org/packages/c8/1e/d86b9d474959f92a1f17639d97c6027adc941fe5a273ace2da55b0ff3897/agent_framework_azure_cosmos-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_azure_cosmos-1.0.0b260721-py3-none-any.whl.metadata (5.5 kB)
+Collecting agent-framework-azurefunctions (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-azurefunctions from https://files.pythonhosted.org/packages/d7/ef/3762efbd94614184d7c6bd00a02547f2752751fb4f2d67bd8c314d1de5b7/agent_framework_azurefunctions-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_azurefunctions-1.0.0b260721-py3-none-any.whl.metadata (2.2 kB)
+Collecting agent-framework-bedrock (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-bedrock from https://files.pythonhosted.org/packages/28/9f/64da650256c91d6cabfebd272f237dbc81ca7cd1f7bbc9c06508e6c5d99d/agent_framework_bedrock-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_bedrock-1.0.0b260721-py3-none-any.whl.metadata (1.9 kB)
+Collecting agent-framework-chatkit (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-chatkit from https://files.pythonhosted.org/packages/58/4f/d2c08f76ccb89e015c58a904745d1f3f3354a4a25f34573c65c710701a69/agent_framework_chatkit-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_chatkit-1.0.0b260721-py3-none-any.whl.metadata (6.5 kB)
+Collecting agent-framework-claude (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-claude from https://files.pythonhosted.org/packages/2e/97/311b3d96bf8f2282aa7d79c8b9b3b747fc6ca1f69ab1b0bee8a5a8ddef90/agent_framework_claude-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_claude-1.0.0b260721-py3-none-any.whl.metadata (1.5 kB)
+Collecting agent-framework-copilotstudio (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-copilotstudio from https://files.pythonhosted.org/packages/6f/03/df0347c724bb96f1512525374840bb326c90d019c7dc338f607da0b0b89f/agent_framework_copilotstudio-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_copilotstudio-1.0.0b260721-py3-none-any.whl.metadata (4.4 kB)
+Collecting agent-framework-declarative (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-declarative from https://files.pythonhosted.org/packages/79/77/6a2f634b7b97940135afc173f97e07b3e7b0c4326fd7b9142159da1d932e/agent_framework_declarative-1.0.0-py3-none-any.whl.metadata
+  Downloading agent_framework_declarative-1.0.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting agent-framework-devui (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/31/bb/bd315c3b1182d112a24ab50bf771e9c2a1932751eae31a29b3e76b5f1127/agent_framework_devui-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260721-py3-none-any.whl.metadata (19 kB)
+Collecting agent-framework-durabletask (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-durabletask from https://files.pythonhosted.org/packages/0b/9b/be1b346c8430a043b7d8ed67ea1acda21192b8617a248fd8f651d13c2117/agent_framework_durabletask-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_durabletask-1.0.0b260721-py3-none-any.whl.metadata (2.4 kB)
+Collecting agent-framework-foundry (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-foundry from https://files.pythonhosted.org/packages/ba/dd/7ce556b8867f75514f90e5c70223638100505d2e1972b7a2c7c4abcd8155/agent_framework_foundry-1.10.3-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry-1.10.3-py3-none-any.whl.metadata (12 kB)
+Collecting agent-framework-foundry-hosting (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/02/2f/4c7e544c862c480e72a407c846d2b62985cb8990f8e2bc9fad0abb298094/agent_framework_foundry_hosting-1.0.0b260722-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0b260722-py3-none-any.whl.metadata (1.5 kB)
+Collecting agent-framework-foundry-local (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-foundry-local from https://files.pythonhosted.org/packages/a8/32/fab73832f0062ff2632f800b169757417cfa8a7943541760293ddc4b661f/agent_framework_foundry_local-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_local-1.0.0b260721-py3-none-any.whl.metadata (1.7 kB)
+Collecting agent-framework-gemini (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-gemini from https://files.pythonhosted.org/packages/63/2b/be163e873b9f887fbc8166fb1bb651e4971bacbec008e5b3b9aa2122c624/agent_framework_gemini-1.0.0b260722-py3-none-any.whl.metadata
+  Downloading agent_framework_gemini-1.0.0b260722-py3-none-any.whl.metadata (2.9 kB)
+Collecting agent-framework-hyperlight (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-hyperlight from https://files.pythonhosted.org/packages/17/cd/bd055aed282a05230382dcee387d2573d6b29a432f0722e45839549affa6/agent_framework_hyperlight-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_hyperlight-1.0.0b260721-py3-none-any.whl.metadata (6.0 kB)
+Collecting agent-framework-lab (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-lab from https://files.pythonhosted.org/packages/84/ad/67b0fb29c22d97d29d0edc084e3a9438befca110c7c5a305217bb2d63e8f/agent_framework_lab-1.0.0b260709-py3-none-any.whl.metadata
+  Downloading agent_framework_lab-1.0.0b260709-py3-none-any.whl.metadata (6.5 kB)
+Collecting agent-framework-mem0 (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-mem0 from https://files.pythonhosted.org/packages/db/87/568872c880d9bfad68cbc7670d7c1a933c59b8aa4043abe583a189956db7/agent_framework_mem0-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_mem0-1.0.0b260721-py3-none-any.whl.metadata (2.1 kB)
+Collecting agent-framework-mistral (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-mistral from https://files.pythonhosted.org/packages/12/8d/d6d3a3b917281ed16f5dfdf3bd98ff4a362dbe366463247166a3e09d740e/agent_framework_mistral-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_mistral-1.0.0b260721-py3-none-any.whl.metadata (2.5 kB)
+Collecting agent-framework-monty (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-monty from https://files.pythonhosted.org/packages/cb/24/bd533af04c22869f57dc12ce788afe5175666d399a6a1517ec20f760d8d5/agent_framework_monty-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_monty-1.0.0b260721-py3-none-any.whl.metadata (7.4 kB)
+Collecting agent-framework-ollama (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-ollama from https://files.pythonhosted.org/packages/1e/c0/42136076d4bc14d8863aecde4af59a3c3c0f6ce125356143302ab3cb872b/agent_framework_ollama-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_ollama-1.0.0b260721-py3-none-any.whl.metadata (1.6 kB)
+Collecting agent-framework-openai (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-openai from https://files.pythonhosted.org/packages/36/e3/b74efe577efaaa505db051d3517c6ecedecfbc35cc82ddc3e2e5e6ecb025/agent_framework_openai-1.11.0-py3-none-any.whl.metadata
+  Downloading agent_framework_openai-1.11.0-py3-none-any.whl.metadata (5.1 kB)
+Collecting agent-framework-orchestrations (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-orchestrations from https://files.pythonhosted.org/packages/47/5d/a662a69014881e5ee593b39f64b97c0d34fc036c333eab73e9bc10019308/agent_framework_orchestrations-1.0.1-py3-none-any.whl.metadata
+  Downloading agent_framework_orchestrations-1.0.1-py3-none-any.whl.metadata (6.1 kB)
+Collecting agent-framework-purview (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-purview from https://files.pythonhosted.org/packages/43/59/5017fc1b0378c09f422dd121bceef2fb96cde81c823d59bea64a38c1fb9a/agent_framework_purview-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_purview-1.0.0b260721-py3-none-any.whl.metadata (15 kB)
+Collecting agent-framework-redis (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-redis from https://files.pythonhosted.org/packages/7d/9e/6c9924ab3b61b37837c783a6d65d7cd39a13aa1d600508a56852b8cee9cf/agent_framework_redis-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_redis-1.0.0b260721-py3-none-any.whl.metadata (3.1 kB)
+Collecting agent-framework-tools (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-tools from https://files.pythonhosted.org/packages/29/87/960953b9606d2a143d0feba0ce0049a71ae2e6a42bb9177c9e64f6c199cc/agent_framework_tools-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_tools-1.0.0b260721-py3-none-any.whl.metadata (7.4 kB)
+Requirement already satisfied: anyio>=4.5 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (4.9.0)
+Requirement already satisfied: httpx-sse>=0.4 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.4.3)
+Requirement already satisfied: httpx<1.0.0,>=0.27.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.28.1)
+Requirement already satisfied: jsonschema>=4.20.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (4.23.0)
+Requirement already satisfied: pydantic-settings>=2.5.2 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (2.12.0)
+Requirement already satisfied: pyjwt>=2.10.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from pyjwt[crypto]>=2.10.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (2.10.1)
+Collecting python-multipart>=0.0.9 (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for python-multipart>=0.0.9 from https://files.pythonhosted.org/packages/e1/04/e8135ebd1ad02c56ec633277529b2602ff99ff634be76cdba5744cf554fd/python_multipart-0.0.32-py3-none-any.whl.metadata
+  Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
+Requirement already satisfied: pywin32>=310 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (311)
+Collecting sse-starlette>=1.6.1 (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for sse-starlette>=1.6.1 from https://files.pythonhosted.org/packages/49/36/e10c1d1b7ca881d2625db2ec28508578499187bb1c389952c398474e1834/sse_starlette-3.4.6-py3-none-any.whl.metadata
+  Downloading sse_starlette-3.4.6-py3-none-any.whl.metadata (15 kB)
+Requirement already satisfied: starlette>=0.27 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.46.2)
+Collecting typing-inspection>=0.4.1 (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for typing-inspection>=0.4.1 from https://files.pythonhosted.org/packages/dc/9b/47798a6c91d8bdb567fe2698fe81e0c6b7cb7ef4d13da4114b41d239f65d/typing_inspection-0.4.2-py3-none-any.whl.metadata
+  Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+Requirement already satisfied: uvicorn>=0.31.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.34.2)
+Requirement already satisfied: certifi in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from httpx<1.0.0,>=0.27.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (2025.1.31)
+Requirement already satisfied: httpcore==1.* in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from httpx<1.0.0,>=0.27.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (1.0.9)
+Requirement already satisfied: idna in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from httpx<1.0.0,>=0.27.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (3.10)
+Requirement already satisfied: h11>=0.16 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from httpcore==1.*->httpx<1.0.0,>=0.27.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.16.0)
+Requirement already satisfied: annotated-types>=0.6.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from pydantic<3,>=2->agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework) (0.7.0)
+Requirement already satisfied: pydantic-core==2.33.2 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from pydantic<3,>=2->agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework) (2.33.2)
+Requirement already satisfied: exceptiongroup>=1.0.2 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from anyio>=4.5->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (1.3.1)
+Requirement already satisfied: sniffio>=1.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from anyio>=4.5->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (1.3.1)
+Requirement already satisfied: attrs>=22.2.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from jsonschema>=4.20.0->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (25.3.0)
+Requirement already satisfied: jsonschema-specifications>=2023.03.6 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from jsonschema>=4.20.0->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (2024.10.1)
+Requirement already satisfied: referencing>=0.28.4 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from jsonschema>=4.20.0->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.36.2)
+Requirement already satisfied: rpds-py>=0.7.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from jsonschema>=4.20.0->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.24.0)
+Requirement already satisfied: cryptography>=3.4.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from pyjwt[crypto]>=2.10.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (46.0.3)
+Requirement already satisfied: cffi>=2.0.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from cryptography>=3.4.0->pyjwt[crypto]>=2.10.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (2.0.0)
+Requirement already satisfied: pycparser in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from cffi>=2.0.0->cryptography>=3.4.0->pyjwt[crypto]>=2.10.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (2.23)
+Collecting starlette>=0.27 (from mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for starlette>=0.27 from https://files.pythonhosted.org/packages/ec/bb/2799cc2ede3ed41131f8975621e7213dfc7ef4acbbaadfa440f32500c370/starlette-1.3.1-py3-none-any.whl.metadata
+  Downloading starlette-1.3.1-py3-none-any.whl.metadata (6.4 kB)
+Requirement already satisfied: click>=7.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from uvicorn>=0.31.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (8.1.8)
+Requirement already satisfied: colorama in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from click>=7.0->uvicorn>=0.31.1->mcp<2,>=1.24.0->agent-framework-core[all]==1.12.1->agent-framework) (0.4.6)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/be/d0/8fe29e01566327058f5f42e290539b65ee738ffdda5c2953efd3f6ccd2af/a2a_sdk-0.2.0a1-py3-none-any.whl (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/ae/04/eb442bba86d6550735d8eaf8f01d34dafac3a34c012dc784d45790dd7c94/a2a_sdk-0.2.0a1.tar.gz (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/51/27/72068a820e36dfd4fe032fd4ba53728a2745b851b426e76fbc6b969146cb/a2a_sdk-0.2.1a1-py3-none-any.whl (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/e4/01/0ab85e3bd60217787b5a63ad9bd8c4ceefa535ff1a781b09e41463f8c3f1/a2a_sdk-0.2.1a1.tar.gz (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/b1/31/7d50ed834d75379063d8bdab2d50ecc5f37f020b9b723c4c1b09e12cacf7/a2a_sdk-0.2.1a2-py3-none-any.whl (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/f3/82/f3e46216bb7b2954b3b1f117c4fdf093f10878bb01c40089abf03f5cb88c/a2a_sdk-0.2.1a2.tar.gz (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/db/29/b36a96936c7b52505700fb94ff63e00840f6fd32caa9b5327dbcd76678e3/a2a_sdk-0.2.1-py3-none-any.whl (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/0c/c0/c2bae45e164f49a96d305f96957daafd772618af387cb9318b1af3264a6a/a2a_sdk-0.2.1.tar.gz (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/48/3f/4a0fca01bcb36d52c08ebd8f06fb0548ea6e445dd352b506c4ca9cd94cce/a2a_sdk-0.2.2-py3-none-any.whl (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/47/13/f5a9e0480eef273d47ec31fa6a5a11054b16c473e5e4209cae4436d17db0/a2a_sdk-0.2.2.tar.gz (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/4f/45/5cf11f778f2c2f6348a74fa274c0c36643aed984b944322e9d16f5f07ddb/a2a_sdk-0.2.3-py3-none-any.whl (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/a8/76/20db99e84c65c8eb70564f08f180670ead73f59563156964f5c8d5d773b0/a2a_sdk-0.2.3.tar.gz (from https://pypi.org/simple/a2a-sdk/) (requires-python:>=3.13)
+Collecting a2a-sdk<2,>=1.0.0 (from agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for a2a-sdk<2,>=1.0.0 from https://files.pythonhosted.org/packages/c1/33/d414a03d5ef5a7d6d09a20dc9f8094e7fb9edb488662ff99c535a2a62cf1/a2a_sdk-1.1.2-py3-none-any.whl.metadata
+  Downloading a2a_sdk-1.1.2-py3-none-any.whl.metadata (9.5 kB)
+Collecting culsans>=0.11.0 (from a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for culsans>=0.11.0 from https://files.pythonhosted.org/packages/e0/5d/9fb19fb38f6d6120422064279ea5532e22b84aa2be8831d49607194feda3/culsans-0.11.0-py3-none-any.whl.metadata
+  Downloading culsans-0.11.0-py3-none-any.whl.metadata (13 kB)
+Collecting google-api-core>=1.26.0 (from a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for google-api-core>=1.26.0 from https://files.pythonhosted.org/packages/89/31/5056a347bb934ea04583c8b27916ef1501729c72638629545bce26ff4223/google_api_core-2.33.0-py3-none-any.whl.metadata
+  Downloading google_api_core-2.33.0-py3-none-any.whl.metadata (3.2 kB)
+Requirement already satisfied: googleapis-common-protos>=1.70.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (1.72.0)
+Collecting json-rpc>=1.15.0 (from a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for json-rpc>=1.15.0 from https://files.pythonhosted.org/packages/94/9e/820c4b086ad01ba7d77369fb8b11470a01fac9b4977f02e18659cf378b6b/json_rpc-1.15.0-py2.py3-none-any.whl.metadata
+  Downloading json_rpc-1.15.0-py2.py3-none-any.whl.metadata (7.2 kB)
+Collecting packaging>=24.0 (from a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for packaging>=24.0 from https://files.pythonhosted.org/packages/df/b2/87e62e8c3e2f4b32e5fe99e0b86d576da1312593b39f47d8ceef365e95ed/packaging-26.2-py3-none-any.whl.metadata
+  Downloading packaging-26.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting protobuf<7,>=5.29.5 (from a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for protobuf<7,>=5.29.5 from https://files.pythonhosted.org/packages/76/5d/683efcd4798e0030c1bab27374fd13a89f7c2515fb1f3123efdfaa5eab57/protobuf-6.33.6-cp310-abi3-win_amd64.whl.metadata
+  Downloading protobuf-6.33.6-cp310-abi3-win_amd64.whl.metadata (593 bytes)
+Collecting aiologic<0.18.0,>=0.16.0 (from culsans>=0.11.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for aiologic<0.18.0,>=0.16.0 from https://files.pythonhosted.org/packages/5b/d3/2d310b1b839014034dba0cba685e492df8a5c7ad32c19cab7e979eed6554/aiologic-0.17.1-py3-none-any.whl.metadata
+  Downloading aiologic-0.17.1-py3-none-any.whl.metadata (10 kB)
+Collecting wrapt>=1.16.0 (from aiologic<0.18.0,>=0.16.0->culsans>=0.11.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for wrapt>=1.16.0 from https://files.pythonhosted.org/packages/b0/82/9cd69a1af288fbdedf01a10e3c8a0b6890b08c7f3f96d36a213699dbcd94/wrapt-2.2.2-cp310-cp310-win_amd64.whl.metadata
+  Downloading wrapt-2.2.2-cp310-cp310-win_amd64.whl.metadata (7.6 kB)
+Collecting proto-plus<2.0.0,>=1.24.0 (from google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for proto-plus<2.0.0,>=1.24.0 from https://files.pythonhosted.org/packages/9d/84/4e9a53a062d4073c74897a6bd20fff74d55307341b3e85c081002462b3ef/proto_plus-1.28.2-py3-none-any.whl.metadata
+  Downloading proto_plus-1.28.2-py3-none-any.whl.metadata (2.2 kB)
+Requirement already satisfied: google-auth<3.0.0,>=2.14.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (2.43.0)
+Collecting requests<3.0.0,>=2.33.0 (from google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for requests<3.0.0,>=2.33.0 from https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl.metadata
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Requirement already satisfied: cachetools<7.0,>=2.0.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from google-auth<3.0.0,>=2.14.1->google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (5.5.2)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from google-auth<3.0.0,>=2.14.1->google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (0.4.2)
+Requirement already satisfied: rsa<5,>=3.1.4 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from google-auth<3.0.0,>=2.14.1->google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (4.9.1)
+Requirement already satisfied: charset_normalizer<4,>=2 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from requests<3.0.0,>=2.33.0->google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (3.4.1)
+Requirement already satisfied: urllib3<3,>=1.26 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from requests<3.0.0,>=2.33.0->google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (2.3.0)
+Requirement already satisfied: pyasn1>=0.1.3 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from rsa<5,>=3.1.4->google-auth<3.0.0,>=2.14.1->google-api-core>=1.26.0->a2a-sdk<2,>=1.0.0->agent-framework-a2a->agent-framework-core[all]==1.12.1->agent-framework) (0.6.1)
+Collecting ag-ui-protocol<0.2,>=0.1.19 (from agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for ag-ui-protocol<0.2,>=0.1.19 from https://files.pythonhosted.org/packages/4c/0a/bcad8116eb058e4b4a305e3fc37ebd7efc879deeb86b854f1c5b8b6e97dd/ag_ui_protocol-0.1.19-py3-none-any.whl.metadata
+  Downloading ag_ui_protocol-0.1.19-py3-none-any.whl.metadata (2.9 kB)
+Collecting fastapi<0.138.1,>=0.121.0 (from agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for fastapi<0.138.1,>=0.121.0 from https://files.pythonhosted.org/packages/6c/ff/8496d9847a5fedae775eb49460722d3efaa80487854273e9647ae876218c/fastapi-0.138.0-py3-none-any.whl.metadata
+  Downloading fastapi-0.138.0-py3-none-any.whl.metadata (27 kB)
+Collecting annotated-doc>=0.0.2 (from fastapi<0.138.1,>=0.121.0->agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for annotated-doc>=0.0.2 from https://files.pythonhosted.org/packages/1e/d3/26bf1008eb3d2daa8ef4cacc7f3bfdc11818d111f7e2d0201bc6e3b49d45/annotated_doc-0.0.4-py3-none-any.whl.metadata
+  Downloading annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+Requirement already satisfied: httptools>=0.6.3 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from uvicorn[standard]<1,>=0.30.0->agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework) (0.7.1)
+Requirement already satisfied: pyyaml>=5.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from uvicorn[standard]<1,>=0.30.0->agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework) (6.0.2)
+Requirement already satisfied: watchfiles>=0.13 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from uvicorn[standard]<1,>=0.30.0->agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework) (1.1.1)
+Requirement already satisfied: websockets>=10.4 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from uvicorn[standard]<1,>=0.30.0->agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework) (15.0.1)
+Collecting anthropic<0.117.0,>=0.80.0 (from agent-framework-anthropic->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for anthropic<0.117.0,>=0.80.0 from https://files.pythonhosted.org/packages/c7/dd/2a1e81cf1b163acc340afc4ec74ed1d86f5eed1a809fabdeed3e0997b346/anthropic-0.116.0-py3-none-any.whl.metadata
+  Downloading anthropic-0.116.0-py3-none-any.whl.metadata (3.2 kB)
+Requirement already satisfied: distro<2,>=1.7.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from anthropic<0.117.0,>=0.80.0->agent-framework-anthropic->agent-framework-core[all]==1.12.1->agent-framework) (1.9.0)
+Collecting docstring-parser<1,>=0.15 (from anthropic<0.117.0,>=0.80.0->agent-framework-anthropic->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for docstring-parser<1,>=0.15 from https://files.pythonhosted.org/packages/a7/5f/ed01f9a3cdffbd5a008556fc7b2a08ddb1cc6ace7effa7340604b1d16699/docstring_parser-0.18.0-py3-none-any.whl.metadata
+  Downloading docstring_parser-0.18.0-py3-none-any.whl.metadata (3.5 kB)
+Requirement already satisfied: jiter<1,>=0.4.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from anthropic<0.117.0,>=0.80.0->agent-framework-anthropic->agent-framework-core[all]==1.12.1->agent-framework) (0.12.0)
+Collecting azure-search-documents<13,>=12.0.0 (from agent-framework-azure-ai-search->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-search-documents<13,>=12.0.0 from https://files.pythonhosted.org/packages/a4/b1/4869a064dbb79fb4ecac684de51a8f8f7a93a315f3f9cc4bf8a65cc413cd/azure_search_documents-12.0.0-py3-none-any.whl.metadata
+  Downloading azure_search_documents-12.0.0-py3-none-any.whl.metadata (83 kB)
+Collecting isodate>=0.6.1 (from azure-search-documents<13,>=12.0.0->agent-framework-azure-ai-search->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for isodate>=0.6.1 from https://files.pythonhosted.org/packages/15/aa/0aca39a37d3c7eb941ba736ede56d689e7be91cab5d9ca846bde3999eba6/isodate-0.7.2-py3-none-any.whl.metadata
+  Downloading isodate-0.7.2-py3-none-any.whl.metadata (11 kB)
+Collecting azure-core>=1.37.0 (from azure-search-documents<13,>=12.0.0->agent-framework-azure-ai-search->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-core>=1.37.0 from https://files.pythonhosted.org/packages/5b/db/325c6d7312d2200251c52323878281045aaffcb5586612296484e4280eaa/azure_core-1.41.0-py3-none-any.whl.metadata
+  Downloading azure_core-1.41.0-py3-none-any.whl.metadata (49 kB)
+Collecting azure-ai-contentunderstanding<2,>=1.2.0b2 (from agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-contentunderstanding<2,>=1.2.0b2 from https://files.pythonhosted.org/packages/12/08/bbe98d886deeeae320bb2d54b6cf132b1d811478232076d6e0d16d1aafaa/azure_ai_contentunderstanding-1.2.0b2-py3-none-any.whl.metadata
+  Downloading azure_ai_contentunderstanding-1.2.0b2-py3-none-any.whl.metadata (44 kB)
+Requirement already satisfied: aiohttp<4,>=3.9 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (3.12.15)
+Requirement already satisfied: filetype<2,>=1.2 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (1.2.0)
+Collecting azure-ai-inference<1.0.0b10,>=1.0.0b9 (from agent-framework-foundry->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-inference<1.0.0b10,>=1.0.0b9 from https://files.pythonhosted.org/packages/4f/0f/27520da74769db6e58327d96c98e7b9a07ce686dff582c9a5ec60b03f9dd/azure_ai_inference-1.0.0b9-py3-none-any.whl.metadata
+  Downloading azure_ai_inference-1.0.0b9-py3-none-any.whl.metadata (34 kB)
+Collecting azure-ai-projects<2.4.0,>=2.2.0 (from agent-framework-foundry->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-projects<2.4.0,>=2.2.0 from https://files.pythonhosted.org/packages/15/bd/7e64f2d6e43d19fc8cf464769804f947d997833eb4dce1c86c2ce76146d2/azure_ai_projects-2.3.0-py3-none-any.whl.metadata
+  Downloading azure_ai_projects-2.3.0-py3-none-any.whl.metadata (64 kB)
+Collecting openai<3,>=2.25.0 (from agent-framework-openai->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for openai<3,>=2.25.0 from https://files.pythonhosted.org/packages/b5/2a/dcb891114e303c4379d4a498f10222e33eee540bcef4e1e493bd0af2b242/openai-2.48.0-py3-none-any.whl.metadata
+  Downloading openai-2.48.0-py3-none-any.whl.metadata (36 kB)
+Requirement already satisfied: aiohappyeyeballs>=2.5.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from aiohttp<4,>=3.9->agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (2.6.1)
+Requirement already satisfied: aiosignal>=1.4.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from aiohttp<4,>=3.9->agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (1.4.0)
+Requirement already satisfied: async-timeout<6.0,>=4.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from aiohttp<4,>=3.9->agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (4.0.3)
+Requirement already satisfied: frozenlist>=1.1.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from aiohttp<4,>=3.9->agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (1.7.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from aiohttp<4,>=3.9->agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (6.6.4)
+Requirement already satisfied: propcache>=0.2.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from aiohttp<4,>=3.9->agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (0.3.2)
+Requirement already satisfied: yarl<2.0,>=1.17.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from aiohttp<4,>=3.9->agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework) (1.20.1)
+Collecting azure-identity>=1.15.0 (from azure-ai-projects<2.4.0,>=2.2.0->agent-framework-foundry->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-identity>=1.15.0 from https://files.pythonhosted.org/packages/49/9a/417b3a533e01953a7c618884df2cb05a71e7b68bdbce4fbdb62349d2a2e8/azure_identity-1.25.3-py3-none-any.whl.metadata
+  Downloading azure_identity-1.25.3-py3-none-any.whl.metadata (91 kB)
+Collecting azure-storage-blob>=12.15.0 (from azure-ai-projects<2.4.0,>=2.2.0->agent-framework-foundry->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-storage-blob>=12.15.0 from https://files.pythonhosted.org/packages/5e/0b/e106f0fd7fa785867d9ffcc47dc9e6237c0e58f51058473b777487a98edc/azure_storage_blob-12.30.0-py3-none-any.whl.metadata
+  Downloading azure_storage_blob-12.30.0-py3-none-any.whl.metadata (26 kB)
+Requirement already satisfied: tqdm>4 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from openai<3,>=2.25.0->agent-framework-openai->agent-framework-core[all]==1.12.1->agent-framework) (4.67.1)
+Collecting msal>=1.35.1 (from azure-identity>=1.15.0->azure-ai-projects<2.4.0,>=2.2.0->agent-framework-foundry->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for msal>=1.35.1 from https://files.pythonhosted.org/packages/94/b0/d807279f4b55d16d1f120d5ac4344c6e39b56732e2a224d40bded7fd67ad/msal-1.37.0-py3-none-any.whl.metadata
+  Downloading msal-1.37.0-py3-none-any.whl.metadata (11 kB)
+Collecting msal-extensions>=1.2.0 (from azure-identity>=1.15.0->azure-ai-projects<2.4.0,>=2.2.0->agent-framework-foundry->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for msal-extensions>=1.2.0 from https://files.pythonhosted.org/packages/5e/75/bd9b7bb966668920f06b200e84454c8f3566b102183bc55c5473d96cb2b9/msal_extensions-1.3.1-py3-none-any.whl.metadata
+  Downloading msal_extensions-1.3.1-py3-none-any.whl.metadata (7.8 kB)
+Collecting azure-cosmos<5,>=4.3.0 (from agent-framework-azure-cosmos->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-cosmos<5,>=4.3.0 from https://files.pythonhosted.org/packages/82/26/675496a21a225529510f0755e9ea4ebd8dda348dcbf8b4a2842e1e281446/azure_cosmos-4.16.2-py3-none-any.whl.metadata
+  Downloading azure_cosmos-4.16.2-py3-none-any.whl.metadata (125 kB)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/b8/8d/bb8fd095b59e51e614f77284efb68536863182d417a6d894c680d49be189/azure_functions-2.0.0-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/c2/87/8d6a29d8fb12e841d4dd2ba7f3ef96e958e18b73f3e1324043c3f0ac9774/azure_functions-2.0.0.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/ef/c8/fc414a7e97c0fbf5d0a448d02f7bbd6787829686b9e4edb902fa9e7da64e/azure_functions-2.1.0-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/a5/49/5af2f12a4ac49c5549a4a943f7b78650c98a41c776f8360ca506db246f91/azure_functions-2.1.0.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/0f/2e/0bfc8264b35734f59c16528adead9b2c469da078eaa5f52b7e937be5d778/azure_functions-2.2.0b1-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/a6/2f/d6a03ed7e1a946120873a173aacc858dcde46d4e5f33bd818063021d7376/azure_functions-2.2.0b1.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/fe/3e/12391f538cf695dc3b824cef35e50794895bafabe886b167c84dd0b53354/azure_functions-2.2.0b2-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/77/b9/71c0ba96e1951ad41c677d93c22041b8f56ed121734c6210c57b235e6073/azure_functions-2.2.0b2.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/24/0f/8ae00c94afd995605f7de4bbf0b49b37bd287ba16dc44f865a557d0213a9/azure_functions-2.2.0b4-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/10/f5/ee4c4c61051ccaef55c17890e71aaed27711212f7444ba5dd38f2373bbfa/azure_functions-2.2.0b4.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/e8/6a/565464f20e9ae6b497a09e386c6988b90c8cb8da8364a680993a68c49f4a/azure_functions-2.2.0b5-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/b7/17/8385e0cf4dd0f919cd407093519ae8a2a903569707c426bdddbe338380de/azure_functions-2.2.0b5.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/19/8b/04b61f98fc24e87838339483d4374832caaf96ee09b86a551fe4e4efa6cf/azure_functions-2.2.0-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/d9/fe/76756c226321bdda7d42d42da4256dcc0c3200c38d2b710b85e376540a93/azure_functions-2.2.0.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/07/29/6cc3b4eb52b31bdf2080f65d107499df112b99aa150b4c13e149ef40c86a/azure_functions-2.3.0b1-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/34/68/2b34a911f07a38b96dab5a8198930879dcf79f3997b6f43ae495d09c1fc0/azure_functions-2.3.0b1.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/34/57/8911e5f9da44600e38f14ef6014d2520b49e0fda74f63a3b40e75cb67ee6/azure_functions-2.3.0b2-py3-none-any.whl (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+  Link requires a different Python (3.10.1 not in: '>=3.13'): https://files.pythonhosted.org/packages/a4/de/a888d616c868208f2b378ec2a6f7170faf559be17ab33b8c50f7bebdc4f2/azure_functions-2.3.0b2.tar.gz (from https://pypi.org/simple/azure-functions/) (requires-python:>=3.13)
+Collecting azure-functions<2,>=1.24.0 (from agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-functions<2,>=1.24.0 from https://files.pythonhosted.org/packages/9b/76/e6c5809ee0295e882b6c9ad595896748e33989d353b67316a854f65fb754/azure_functions-1.24.0-py3-none-any.whl.metadata
+  Downloading azure_functions-1.24.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting azure-functions-durable<2,>=1.3.1 (from agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-functions-durable<2,>=1.3.1 from https://files.pythonhosted.org/packages/fe/4c/4bc2cd4a356ccc425028cf46a6e367e6237d86a66ad89d4e971cbe8f059f/azure_functions_durable-1.6.0-py3-none-any.whl.metadata
+  Downloading azure_functions_durable-1.6.0-py3-none-any.whl.metadata (4.3 kB)
+Collecting durabletask<2,>=1.5.0 (from agent-framework-durabletask->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for durabletask<2,>=1.5.0 from https://files.pythonhosted.org/packages/c0/22/a782dbdbfd75fa7386d0a6e18783e392c78e24f8ac0acfe9b56b32deb2d8/durabletask-1.8.0-py3-none-any.whl.metadata
+  Downloading durabletask-1.8.0-py3-none-any.whl.metadata (4.5 kB)
+Collecting durabletask-azuremanaged<2,>=1.4.0 (from agent-framework-durabletask->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for durabletask-azuremanaged<2,>=1.4.0 from https://files.pythonhosted.org/packages/e1/ed/7b8a65f7245685c3b12064b4aed5f6216dd8d5d447e7a63023038875094c/durabletask_azuremanaged-1.8.0-py3-none-any.whl.metadata
+  Downloading durabletask_azuremanaged-1.8.0-py3-none-any.whl.metadata (782 bytes)
+Requirement already satisfied: python-dateutil<3,>=2.8.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from agent-framework-durabletask->agent-framework-core[all]==1.12.1->agent-framework) (2.9.0.post0)
+Requirement already satisfied: werkzeug~=3.1.3 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from azure-functions<2,>=1.24.0->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework) (3.1.3)
+Collecting aiohttp<4,>=3.9 (from agent-framework-azure-contentunderstanding->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for aiohttp<4,>=3.9 from https://files.pythonhosted.org/packages/d8/15/fe5b8f6a71ae112bc677163d0b0701bda5dc15005249582258ede0eb88c7/aiohttp-3.14.3-cp310-cp310-win_amd64.whl.metadata
+  Downloading aiohttp-3.14.3-cp310-cp310-win_amd64.whl.metadata (8.5 kB)
+Collecting furl>=2.1.0 (from azure-functions-durable<2,>=1.3.1->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for furl>=2.1.0 from https://files.pythonhosted.org/packages/61/8c/dce3b1b7593858eba995b2dfdb833f872c7f863e3da92aab7128a6b11af4/furl-2.1.4-py2.py3-none-any.whl.metadata
+  Downloading furl-2.1.4-py2.py3-none-any.whl.metadata (25 kB)
+Collecting opentelemetry-sdk>=1.32.1 (from azure-functions-durable<2,>=1.3.1->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for opentelemetry-sdk>=1.32.1 from https://files.pythonhosted.org/packages/e7/23/ff077e61886ee020a17ce9c8b6fa11c601c8d8345b09ea24f605445df62a/opentelemetry_sdk-1.44.0-py3-none-any.whl.metadata
+  Downloading opentelemetry_sdk-1.44.0-py3-none-any.whl.metadata (1.6 kB)
+Requirement already satisfied: grpcio in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from durabletask<2,>=1.5.0->agent-framework-durabletask->agent-framework-core[all]==1.12.1->agent-framework) (1.76.0)
+Collecting asyncio (from durabletask<2,>=1.5.0->agent-framework-durabletask->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for asyncio from https://files.pythonhosted.org/packages/57/64/eff2564783bd650ca25e15938d1c5b459cda997574a510f7de69688cb0b4/asyncio-4.0.0-py3-none-any.whl.metadata
+  Downloading asyncio-4.0.0-py3-none-any.whl.metadata (994 bytes)
+Requirement already satisfied: six>=1.5 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from python-dateutil<3,>=2.8.0->agent-framework-durabletask->agent-framework-core[all]==1.12.1->agent-framework) (1.17.0)
+Requirement already satisfied: MarkupSafe>=2.1.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from werkzeug~=3.1.3->azure-functions<2,>=1.24.0->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework) (3.0.2)
+Collecting orderedmultidict>=1.0.1 (from furl>=2.1.0->azure-functions-durable<2,>=1.3.1->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for orderedmultidict>=1.0.1 from https://files.pythonhosted.org/packages/b2/6c/d8a02ffb24876b5f51fbd781f479fc6525a518553a4196bd0433dae9ff8e/orderedmultidict-1.0.2-py2.py3-none-any.whl.metadata
+  Downloading orderedmultidict-1.0.2-py2.py3-none-any.whl.metadata (1.2 kB)
+Collecting opentelemetry-semantic-conventions==0.65b0 (from opentelemetry-sdk>=1.32.1->azure-functions-durable<2,>=1.3.1->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for opentelemetry-semantic-conventions==0.65b0 from https://files.pythonhosted.org/packages/a6/0e/49df70d9b81fb5cbae4bbf2a49d865b09bcbcbc4eb53f5851b1027738d78/opentelemetry_semantic_conventions-0.65b0-py3-none-any.whl.metadata
+  Downloading opentelemetry_semantic_conventions-0.65b0-py3-none-any.whl.metadata (2.4 kB)
+Collecting boto3<2.0.0,>=1.35.0 (from agent-framework-bedrock->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for boto3<2.0.0,>=1.35.0 from https://files.pythonhosted.org/packages/b8/57/3a960c9f581c00f2a591901b46e035ff79ab3956d16607f12306b3b8d483/boto3-1.43.56-py3-none-any.whl.metadata
+  Downloading boto3-1.43.56-py3-none-any.whl.metadata (6.6 kB)
+Collecting botocore<2.0.0,>=1.35.0 (from agent-framework-bedrock->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for botocore<2.0.0,>=1.35.0 from https://files.pythonhosted.org/packages/5c/cd/86fe9e659e9699f62f8dd5ecd8c6725474334b23cab8aa71d82b5f56f1a4/botocore-1.43.56-py3-none-any.whl.metadata
+  Downloading botocore-1.43.56-py3-none-any.whl.metadata (5.6 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from boto3<2.0.0,>=1.35.0->agent-framework-bedrock->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for jmespath<2.0.0,>=0.7.1 from https://files.pythonhosted.org/packages/14/2f/967ba146e6d58cf6a652da73885f52fc68001525b4197effc174321d70b4/jmespath-1.1.0-py3-none-any.whl.metadata
+  Downloading jmespath-1.1.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting s3transfer<0.20.0,>=0.19.0 (from boto3<2.0.0,>=1.35.0->agent-framework-bedrock->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for s3transfer<0.20.0,>=0.19.0 from https://files.pythonhosted.org/packages/bc/e7/5c595c75e9f41a44f30e526eda465ea0b4eec93470e074e4a111b253f13a/s3transfer-0.19.2-py3-none-any.whl.metadata
+  Downloading s3transfer-0.19.2-py3-none-any.whl.metadata (1.7 kB)
+Collecting openai-chatkit<2.0.0,>=1.6.4 (from agent-framework-chatkit->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for openai-chatkit<2.0.0,>=1.6.4 from https://files.pythonhosted.org/packages/aa/00/64b0faae946885e9bf52a8ea77d8bd01c80f6d0be967a30c1d4e73fc2ce1/openai_chatkit-1.6.5-py3-none-any.whl.metadata
+  Downloading openai_chatkit-1.6.5-py3-none-any.whl.metadata (432 bytes)
+Collecting openai-agents>=0.3.2 (from openai-chatkit<2.0.0,>=1.6.4->agent-framework-chatkit->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for openai-agents>=0.3.2 from https://files.pythonhosted.org/packages/e0/7c/08b9929a15131081898e38c5612d44ee293851d5c80f31ca1153efe82143/openai_agents-0.18.3-py3-none-any.whl.metadata
+  Downloading openai_agents-0.18.3-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: jinja2<4,>=3.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from openai-chatkit<2.0.0,>=1.6.4->agent-framework-chatkit->agent-framework-core[all]==1.12.1->agent-framework) (3.1.6)
+Collecting griffelib<3,>=2 (from openai-agents>=0.3.2->openai-chatkit<2.0.0,>=1.6.4->agent-framework-chatkit->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for griffelib<3,>=2 from https://files.pythonhosted.org/packages/e4/d3/5268aeabf2ad82658c4e2ff3a060648d0f02f3926cb53247c0e4d0dab49e/griffelib-2.1.0-py3-none-any.whl.metadata
+  Downloading griffelib-2.1.0-py3-none-any.whl.metadata (1.3 kB)
+Collecting pydantic<3,>=2 (from agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for pydantic<3,>=2 from https://files.pythonhosted.org/packages/fd/7b/122376b1fd3c62c1ed9dc80c931ace4844b3c55407b6fb2d199377c9736f/pydantic-2.13.4-py3-none-any.whl.metadata
+  Downloading pydantic-2.13.4-py3-none-any.whl.metadata (109 kB)
+Collecting pydantic-core==2.46.4 (from pydantic<3,>=2->agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for pydantic-core==2.46.4 from https://files.pythonhosted.org/packages/01/aa/62f082da2c91fac1c234bc9ee0066257ce83f0604abd72e4c9d5991f2d84/pydantic_core-2.46.4-cp310-cp310-win_amd64.whl.metadata
+  Downloading pydantic_core-2.46.4-cp310-cp310-win_amd64.whl.metadata (6.7 kB)
+Collecting claude-agent-sdk<0.3,>=0.1.46 (from agent-framework-claude->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for claude-agent-sdk<0.3,>=0.1.46 from https://files.pythonhosted.org/packages/a3/c9/ffbd8113080f87a4cd7bbfc8b00a974ea7189e3f666b5d7a2903dec7b74f/claude_agent_sdk-0.2.128-py3-none-win_amd64.whl.metadata
+  Downloading claude_agent_sdk-0.2.128-py3-none-win_amd64.whl.metadata (13 kB)
+Collecting microsoft-agents-copilotstudio-client<0.3.2,>=0.3.1 (from agent-framework-copilotstudio->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for microsoft-agents-copilotstudio-client<0.3.2,>=0.3.1 from https://files.pythonhosted.org/packages/97/35/8b4e9c691f2ce89653007f358519bbadff1fe0d495c3723c9dbbfa962a33/microsoft_agents_copilotstudio_client-0.3.1-py3-none-any.whl.metadata
+  Downloading microsoft_agents_copilotstudio_client-0.3.1-py3-none-any.whl.metadata (461 bytes)
+Collecting microsoft-agents-hosting-core==0.3.1 (from microsoft-agents-copilotstudio-client<0.3.2,>=0.3.1->agent-framework-copilotstudio->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for microsoft-agents-hosting-core==0.3.1 from https://files.pythonhosted.org/packages/f0/1b/543ddaa2daf8593911a02a07a6a78366d4a6a0053ec86a557c19fa97b60e/microsoft_agents_hosting_core-0.3.1-py3-none-any.whl.metadata
+  Downloading microsoft_agents_hosting_core-0.3.1-py3-none-any.whl.metadata (574 bytes)
+Collecting microsoft-agents-activity==0.3.1 (from microsoft-agents-hosting-core==0.3.1->microsoft-agents-copilotstudio-client<0.3.2,>=0.3.1->agent-framework-copilotstudio->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for microsoft-agents-activity==0.3.1 from https://files.pythonhosted.org/packages/25/8b/50ce2243e2900e94358f37009121145bb8224a388d95d704856aa2686667/microsoft_agents_activity-0.3.1-py3-none-any.whl.metadata
+  Downloading microsoft_agents_activity-0.3.1-py3-none-any.whl.metadata (408 bytes)
+Collecting python-dotenv<2,>=1 (from agent-framework-core==1.12.1->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for python-dotenv<2,>=1 from https://files.pythonhosted.org/packages/0b/d7/1959b9648791274998a9c3526f6d0ec8fd2233e4d4acce81bbae76b44b2a/python_dotenv-1.2.2-py3-none-any.whl.metadata
+  Downloading python_dotenv-1.2.2-py3-none-any.whl.metadata (27 kB)
+Collecting powerfx<0.0.35,>=0.0.32 (from agent-framework-declarative->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for powerfx<0.0.35,>=0.0.32 from https://files.pythonhosted.org/packages/6f/96/0f8a1f86485b3ec0315e3e8403326884a0334b3dcd699df2482669cca4be/powerfx-0.0.34-py3-none-any.whl.metadata
+  Downloading powerfx-0.0.34-py3-none-any.whl.metadata (795 bytes)
+Collecting pythonnet==3.0.5 (from powerfx<0.0.35,>=0.0.32->agent-framework-declarative->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for pythonnet==3.0.5 from https://files.pythonhosted.org/packages/cd/f1/bfb6811df4745f92f14c47a29e50e89a36b1533130fcc56452d4660bd2d6/pythonnet-3.0.5-py3-none-any.whl.metadata
+  Downloading pythonnet-3.0.5-py3-none-any.whl.metadata (6.6 kB)
+Collecting clr_loader<0.3.0,>=0.2.7 (from pythonnet==3.0.5->powerfx<0.0.35,>=0.0.32->agent-framework-declarative->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for clr_loader<0.3.0,>=0.2.7 from https://files.pythonhosted.org/packages/c8/61/cf819f8e8bb4d4c74661acf2498ba8d4a296714be3478d21eaabf64f5b9b/clr_loader-0.2.10-py3-none-any.whl.metadata
+  Downloading clr_loader-0.2.10-py3-none-any.whl.metadata (1.5 kB)
+Collecting azure-ai-agentserver-core<3,>=2.0.0b7 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-core<3,>=2.0.0b7 from https://files.pythonhosted.org/packages/25/0f/d6dddf5b7da0aa9445c10f4f71bd1881ea47e473796488f8daac5b42ab31/azure_ai_agentserver_core-2.0.0b8-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_core-2.0.0b8-py3-none-any.whl.metadata (9.7 kB)
+Collecting azure-ai-agentserver-responses<2,>=1.0.0b8 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-responses<2,>=1.0.0b8 from https://files.pythonhosted.org/packages/f1/ad/8198211ea600edd10882936e19fcd7077fb3fa2f4f2186e2b38944dfad90/azure_ai_agentserver_responses-1.0.0b9-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_responses-1.0.0b9-py3-none-any.whl.metadata (13 kB)
+Collecting azure-ai-agentserver-invocations<2,>=1.0.0b6 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-invocations<2,>=1.0.0b6 from https://files.pythonhosted.org/packages/8c/34/a74fa5a6294eda32ba71c4cea5971087edd10102ea6d18c7000d714493c6/azure_ai_agentserver_invocations-1.0.0b7-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_invocations-1.0.0b7-py3-none-any.whl.metadata (17 kB)
+Collecting hypercorn>=0.17.0 (from azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for hypercorn>=0.17.0 from https://files.pythonhosted.org/packages/93/35/850277d1b17b206bd10874c8a9a3f52e059452fb49bb0d22cbb908f6038b/hypercorn-0.18.0-py3-none-any.whl.metadata
+  Downloading hypercorn-0.18.0-py3-none-any.whl.metadata (5.1 kB)
+  Link requires a different Python (3.10.1 not in: '>=3.11'): https://files.pythonhosted.org/packages/4f/62/1e816e26f29ac63eac183bbd645de7fed7889faf3ed13a36a0135b317167/microsoft_opentelemetry-0.1.0a2-py3-none-any.whl (from https://pypi.org/simple/microsoft-opentelemetry/) (requires-python:>=3.11)
+  Link requires a different Python (3.10.1 not in: '>=3.11'): https://files.pythonhosted.org/packages/bd/1c/8f18b6985ff46bbd7e09374282c7d7dc4d0861df23b0e4840377c62c8b94/microsoft_opentelemetry-0.1.0a2.tar.gz (from https://pypi.org/simple/microsoft-opentelemetry/) (requires-python:>=3.11)
+Collecting microsoft-opentelemetry>=1.3.5 (from azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for microsoft-opentelemetry>=1.3.5 from https://files.pythonhosted.org/packages/1d/95/0259ce80f82953e84462dccb8ecfdf1fdc6cba78db7c0f67d19c29c3a844/microsoft_opentelemetry-1.3.6-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.3.6-py3-none-any.whl.metadata (23 kB)
+Requirement already satisfied: h2>=4.3.0 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from hypercorn>=0.17.0->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework) (4.3.0)
+Collecting priority (from hypercorn>=0.17.0->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for priority from https://files.pythonhosted.org/packages/5e/5f/82c8074f7e84978129347c2c6ec8b6c59f3584ff1a20bc3c940a3e061790/priority-2.0.0-py3-none-any.whl.metadata
+  Downloading priority-2.0.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting taskgroup (from hypercorn>=0.17.0->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for taskgroup from https://files.pythonhosted.org/packages/d1/b1/74babcc824a57904e919f3af16d86c08b524c0691504baf038ef2d7f655c/taskgroup-0.2.2-py2.py3-none-any.whl.metadata
+  Downloading taskgroup-0.2.2-py2.py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: tomli in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from hypercorn>=0.17.0->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework) (2.3.0)
+Collecting wsproto>=0.14.0 (from hypercorn>=0.17.0->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for wsproto>=0.14.0 from https://files.pythonhosted.org/packages/a4/f5/10b68b7b1544245097b2a1b8238f66f2fc6dcaeb24ba5d917f52bd2eed4f/wsproto-1.3.2-py3-none-any.whl.metadata
+  Downloading wsproto-1.3.2-py3-none-any.whl.metadata (5.2 kB)
+Requirement already satisfied: hyperframe<7,>=6.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from h2>=4.3.0->hypercorn>=0.17.0->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework) (6.1.0)
+Requirement already satisfied: hpack<5,>=4.1 in c:\users\namit\.virtualenvs\namit-pgzemgyl\lib\site-packages (from h2>=4.3.0->hypercorn>=0.17.0->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework) (4.1.0)
+Collecting azure-core-tracing-opentelemetry~=1.0.0b11 (from microsoft-opentelemetry>=1.3.5->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-core-tracing-opentelemetry~=1.0.0b11 from https://files.pythonhosted.org/packages/43/01/8898c2506cae6a57c1b76d930d2af94764a65354bc863feb2684235851ce/azure_core_tracing_opentelemetry-1.0.0b13-py3-none-any.whl.metadata
+  Downloading azure_core_tracing_opentelemetry-1.0.0b13-py3-none-any.whl.metadata (11 kB)
+Collecting azure-monitor-opentelemetry-exporter~=1.0.0b54 (from microsoft-opentelemetry>=1.3.5->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-monitor-opentelemetry-exporter~=1.0.0b54 from https://files.pythonhosted.org/packages/70/80/c1e58ea1c7dd7452579ab98912e9a3aa9a5fdb22f24a676f3cdaac3ab096/azure_monitor_opentelemetry_exporter-1.0.0b55-py2.py3-none-any.whl.metadata
+  Downloading azure_monitor_opentelemetry_exporter-1.0.0b55-py2.py3-none-any.whl.metadata (33 kB)
+Collecting opentelemetry-sdk>=1.32.1 (from azure-functions-durable<2,>=1.3.1->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for opentelemetry-sdk>=1.32.1 from https://files.pythonhosted.org/packages/49/e3/b17be23af124201c9f52eececd4cc8ddfed1597d37b4ee771895d325805c/opentelemetry_sdk-1.43.0-py3-none-any.whl.metadata
+  Downloading opentelemetry_sdk-1.43.0-py3-none-any.whl.metadata (1.7 kB)
+INFO: pip is looking at multiple versions of microsoft-opentelemetry to determine which version is compatible with other requirements. This could take a while.
+Collecting microsoft-opentelemetry>=1.3.5 (from azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for microsoft-opentelemetry>=1.3.5 from https://files.pythonhosted.org/packages/ad/8d/9a0d65e6e683778adf54c617e42ef008060d00e08f74255c45d409bfe9b5/microsoft_opentelemetry-1.3.5-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.3.5-py3-none-any.whl.metadata (23 kB)
+Collecting azure-ai-agentserver-responses<2,>=1.0.0b8 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-responses<2,>=1.0.0b8 from https://files.pythonhosted.org/packages/d3/0d/bb14df13b7d3d57decc72c0908677e229efcb24cad2ccce0c16fa736edce/azure_ai_agentserver_responses-1.0.0b8-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_responses-1.0.0b8-py3-none-any.whl.metadata (13 kB)
+Collecting azure-ai-agentserver-invocations<2,>=1.0.0b6 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-invocations<2,>=1.0.0b6 from https://files.pythonhosted.org/packages/ff/46/ba7e11ab9dfdcdacd9e7d9cc824a03ee9dfcf9c46a5dc7a92028637da48c/azure_ai_agentserver_invocations-1.0.0b6-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_invocations-1.0.0b6-py3-none-any.whl.metadata (15 kB)
+Collecting azure-ai-agentserver-core<3,>=2.0.0b7 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-core<3,>=2.0.0b7 from https://files.pythonhosted.org/packages/73/be/63747c3b1c6c7a41672568f34a41a7d54005201a7db552d928d64ea4f367/azure_ai_agentserver_core-2.0.0b7-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_core-2.0.0b7-py3-none-any.whl.metadata (7.8 kB)
+INFO: pip is still looking at multiple versions of microsoft-opentelemetry to determine which version is compatible with other requirements. This could take a while.
+Collecting microsoft-opentelemetry>=1.0.0 (from azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/62/d6/54ebbc9a930ffc977f319eba5645de11c4d09d1abdf9066afef5f9a35839/microsoft_opentelemetry-1.3.4-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.3.4-py3-none-any.whl.metadata (23 kB)
+Collecting opentelemetry-sdk>=1.32.1 (from azure-functions-durable<2,>=1.3.1->agent-framework-azurefunctions->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for opentelemetry-sdk>=1.32.1 from https://files.pythonhosted.org/packages/2c/c5/6a852903d8bfac758c6dc6e9a68b015d3c33f2f1be5e9591e0f4b69c7e0a/opentelemetry_sdk-1.40.0-py3-none-any.whl.metadata
+  Downloading opentelemetry_sdk-1.40.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting microsoft-opentelemetry>=1.0.0 (from azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/5f/8e/497ae240081aa5dc91eae54e154fe3f8218e4a06c2fa9215b7c266c3b402/microsoft_opentelemetry-1.3.3-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.3.3-py3-none-any.whl.metadata (23 kB)
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/22/8d/6960be61c8fe236fef730b0cae1d97a1898f62355b2d6679ef46abe1e4be/microsoft_opentelemetry-1.3.2-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.3.2-py3-none-any.whl.metadata (22 kB)
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/a8/cb/4f0c915651fd97e09a1c38f265407da316d6bc2a4674cd19dfb7ec5f8dc0/microsoft_opentelemetry-1.3.1-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.3.1-py3-none-any.whl.metadata (22 kB)
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/1d/c4/abffcadab014bfec6f684465630fea0660933d19210ca8ba2adbf10a8872/microsoft_opentelemetry-1.3.0-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.3.0-py3-none-any.whl.metadata (22 kB)
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/55/3c/3baa0bbb170377e318f4c22b258e1deb0d976fc3c10bf212982485618d76/microsoft_opentelemetry-1.2.0-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.2.0-py3-none-any.whl.metadata (20 kB)
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/30/7f/6bafdba9ce64dc6e609fcbbefd46ee0a0d33068e208c10f40dec44baee1c/microsoft_opentelemetry-1.1.0-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.1.0-py3-none-any.whl.metadata (20 kB)
+  Obtaining dependency information for microsoft-opentelemetry>=1.0.0 from https://files.pythonhosted.org/packages/9c/4d/11259e370e979cc474081e0b908af036d6258bf521a304f198e4d44a4f99/microsoft_opentelemetry-1.0.0-py3-none-any.whl.metadata
+  Downloading microsoft_opentelemetry-1.0.0-py3-none-any.whl.metadata (19 kB)
+Collecting agent-framework-foundry-hosting (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/4b/58/591d374670400a00a9aa2efd776becccd2f979e1c26f667070de957d5656/agent_framework_foundry_hosting-1.0.0b260721-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0b260721-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/2a/46/a2effbb4a6b22495589c1d059eabc6cee685e72262dd9a7115a3963d56c0/agent_framework_foundry_hosting-1.0.0a260709-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260709-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/c3/77/3bc8a096df1fa1e1ed5a0f15f40928feff74dfe8e8572226ba9b9bf5c7d7/agent_framework_foundry_hosting-1.0.0a260630-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260630-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/5c/cb/cc4c3ea878b53a57d71df14d89543d6775da11a1ccbc25e4a871e629277c/agent_framework_foundry_hosting-1.0.0a260618-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260618-py3-none-any.whl.metadata (1.5 kB)
+Collecting azure-ai-agentserver-core<3,>=2.0.0b3 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-core<3,>=2.0.0b3 from https://files.pythonhosted.org/packages/f2/03/6b638d565d9e13b31fdffe7ad9ea4761c07f30616ab3d30f2b5737c4d936/azure_ai_agentserver_core-2.0.0b6-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_core-2.0.0b6-py3-none-any.whl.metadata (6.2 kB)
+  Obtaining dependency information for azure-ai-agentserver-core<3,>=2.0.0b3 from https://files.pythonhosted.org/packages/68/80/a43a269601512793b220c36dc0864b44d806b969dbfe14f1ecc3b5f5202b/azure_ai_agentserver_core-2.0.0b5-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_core-2.0.0b5-py3-none-any.whl.metadata (6.2 kB)
+  Obtaining dependency information for azure-ai-agentserver-core<3,>=2.0.0b3 from https://files.pythonhosted.org/packages/c2/73/1b296cdb7a3f9a24f81f72c4de2efc42499fa0d158c40c31b0b2323a70cb/azure_ai_agentserver_core-2.0.0b4-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_core-2.0.0b4-py3-none-any.whl.metadata (6.2 kB)
+  Obtaining dependency information for azure-ai-agentserver-core<3,>=2.0.0b3 from https://files.pythonhosted.org/packages/7f/9b/1fc87c05b55821f33c46c5e8a3b97a573aa2fc4bff387e75cca1a87800b4/azure_ai_agentserver_core-2.0.0b3-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_core-2.0.0b3-py3-none-any.whl.metadata (6.3 kB)
+Collecting opentelemetry-exporter-otlp-proto-grpc>=1.40.0 (from azure-ai-agentserver-core<3,>=2.0.0b3->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for opentelemetry-exporter-otlp-proto-grpc>=1.40.0 from https://files.pythonhosted.org/packages/54/29/6ae42ba32b153ae0a44ae125f0caff2188bbe62d99c82d1768da30864e72/opentelemetry_exporter_otlp_proto_grpc-1.44.0-py3-none-any.whl.metadata
+  Downloading opentelemetry_exporter_otlp_proto_grpc-1.44.0-py3-none-any.whl.metadata (2.6 kB)
+INFO: pip is looking at multiple versions of azure-ai-agentserver-invocations to determine which version is compatible with other requirements. This could take a while.
+Collecting azure-ai-agentserver-invocations<2,>=1.0.0b3 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-invocations<2,>=1.0.0b3 from https://files.pythonhosted.org/packages/d3/b9/8126693dec15df6a15508a7a30e259801dd70114c4b5f96ff457f2d89e76/azure_ai_agentserver_invocations-1.0.0b5-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_invocations-1.0.0b5-py3-none-any.whl.metadata (13 kB)
+  Obtaining dependency information for azure-ai-agentserver-invocations<2,>=1.0.0b3 from https://files.pythonhosted.org/packages/6b/c7/882e349459a0e3bfe63ca681f722cc7d5807df5e4aa348d879e3dc05d4c0/azure_ai_agentserver_invocations-1.0.0b4-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_invocations-1.0.0b4-py3-none-any.whl.metadata (13 kB)
+  Obtaining dependency information for azure-ai-agentserver-invocations<2,>=1.0.0b3 from https://files.pythonhosted.org/packages/5e/43/a421671296ae33b62af3a034869fa82ff1979e5f455a29924d30ae1b8307/azure_ai_agentserver_invocations-1.0.0b3-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_invocations-1.0.0b3-py3-none-any.whl.metadata (9.1 kB)
+INFO: pip is looking at multiple versions of azure-ai-agentserver-responses to determine which version is compatible with other requirements. This could take a while.
+Collecting azure-ai-agentserver-responses<2,>=1.0.0b7 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-responses<2,>=1.0.0b7 from https://files.pythonhosted.org/packages/b3/94/48825357e009f7db3b6b5d0a9344a7ab3304e32f06f50328b2393e3b06cb/azure_ai_agentserver_responses-1.0.0b7-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_responses-1.0.0b7-py3-none-any.whl.metadata (11 kB)
+INFO: pip is still looking at multiple versions of azure-ai-agentserver-invocations to determine which version is compatible with other requirements. This could take a while.
+Collecting agent-framework-foundry-hosting (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/06/4f/96994c25800786e1dd840a8a589182251bc7a3cc3cd0bf03d82687746789/agent_framework_foundry_hosting-1.0.0a260609-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260609-py3-none-any.whl.metadata (1.5 kB)
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/b2/fc/1cb79940ece2af35eb34cb0157b52378d2d7f6aed26293c61e6a598ae941/agent_framework_foundry_hosting-1.0.0a260604-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260604-py3-none-any.whl.metadata (1.5 kB)
+INFO: pip is still looking at multiple versions of azure-ai-agentserver-responses to determine which version is compatible with other requirements. This could take a while.
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/91/7e/5c468b162c46e289daa6469c02fee00d8039f93936810abbfa32a0955f2b/agent_framework_foundry_hosting-1.0.0a260528-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260528-py3-none-any.whl.metadata (1.5 kB)
+Collecting azure-ai-agentserver-responses<2,>=1.0.0b5 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-responses<2,>=1.0.0b5 from https://files.pythonhosted.org/packages/d2/6a/f5756e4655f1a42558eaae05f0b58456707d1bb23ca72ce5e84ba92ae159/azure_ai_agentserver_responses-1.0.0b6-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_responses-1.0.0b6-py3-none-any.whl.metadata (11 kB)
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+  Obtaining dependency information for azure-ai-agentserver-responses<2,>=1.0.0b5 from https://files.pythonhosted.org/packages/44/91/1e5c0d7ce95ca8b022e69e4ca6b23e413fc2d57f0191429c4633e02213d2/azure_ai_agentserver_responses-1.0.0b5-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_responses-1.0.0b5-py3-none-any.whl.metadata (11 kB)
+Collecting msrest>=0.6.10 (from azure-monitor-opentelemetry-exporter~=1.0.0b54->microsoft-opentelemetry>=1.3.5->azure-ai-agentserver-core<3,>=2.0.0b7->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for msrest>=0.6.10 from https://files.pythonhosted.org/packages/15/cf/f2966a2638144491f8696c27320d5219f48a072715075d168b31d3237720/msrest-0.7.1-py3-none-any.whl.metadata
+  Downloading msrest-0.7.1-py3-none-any.whl.metadata (21 kB)
+INFO: pip is looking at multiple versions of azure-monitor-opentelemetry-exporter to determine which version is compatible with other requirements. This could take a while.
+Collecting azure-monitor-opentelemetry-exporter>=1.0.0b49 (from azure-ai-agentserver-core<3,>=2.0.0b3->agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-monitor-opentelemetry-exporter>=1.0.0b49 from https://files.pythonhosted.org/packages/ea/40/d41fe3ae0617404ac507d3a709c2e343e01de80e14c4076735365fb5c0d3/azure_monitor_opentelemetry_exporter-1.0.0b54-py2.py3-none-any.whl.metadata
+  Downloading azure_monitor_opentelemetry_exporter-1.0.0b54-py2.py3-none-any.whl.metadata (33 kB)
+  Obtaining dependency information for azure-monitor-opentelemetry-exporter>=1.0.0b49 from https://files.pythonhosted.org/packages/5f/dc/6dbff881ac739999bc31f166504ed31a2e0fef45cc59a3c1b2386a4b4abe/azure_monitor_opentelemetry_exporter-1.0.0b53-py2.py3-none-any.whl.metadata
+  Downloading azure_monitor_opentelemetry_exporter-1.0.0b53-py2.py3-none-any.whl.metadata (33 kB)
+  Obtaining dependency information for azure-monitor-opentelemetry-exporter>=1.0.0b49 from https://files.pythonhosted.org/packages/a4/e8/d13e6a74c98ecc3011bce9ab09fc2e75aec48ab46288f72be57c2fa21460/azure_monitor_opentelemetry_exporter-1.0.0b52-py2.py3-none-any.whl.metadata
+  Downloading azure_monitor_opentelemetry_exporter-1.0.0b52-py2.py3-none-any.whl.metadata (33 kB)
+  Obtaining dependency information for azure-monitor-opentelemetry-exporter>=1.0.0b49 from https://files.pythonhosted.org/packages/ea/1a/6b0b7a6181b42709103a65a676c89fd5055cb1d1b281ebe10c49254a170f/azure_monitor_opentelemetry_exporter-1.0.0b51-py2.py3-none-any.whl.metadata
+  Downloading azure_monitor_opentelemetry_exporter-1.0.0b51-py2.py3-none-any.whl.metadata (33 kB)
+  Obtaining dependency information for azure-monitor-opentelemetry-exporter>=1.0.0b49 from https://files.pythonhosted.org/packages/d2/13/865f7cddbe9d8f56720a08d4571a13d0920c4eaa9e2b6bde076d5a5708a6/azure_monitor_opentelemetry_exporter-1.0.0b50-py2.py3-none-any.whl.metadata
+  Downloading azure_monitor_opentelemetry_exporter-1.0.0b50-py2.py3-none-any.whl.metadata (33 kB)
+  Obtaining dependency information for azure-monitor-opentelemetry-exporter>=1.0.0b49 from https://files.pythonhosted.org/packages/c2/d0/dd017ef4af4f929ed80a5079a6227ff795db8a2888806aecdc53a2ffed49/azure_monitor_opentelemetry_exporter-1.0.0b49-py2.py3-none-any.whl.metadata
+  Downloading azure_monitor_opentelemetry_exporter-1.0.0b49-py2.py3-none-any.whl.metadata (33 kB)
+INFO: pip is still looking at multiple versions of azure-monitor-opentelemetry-exporter to determine which version is compatible with other requirements. This could take a while.
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+Collecting agent-framework-foundry-hosting (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/69/33/72f1fe3296a4c3ecfb353deb9c77f779be21f9798a91d4073ab4bbd1d21a/agent_framework_foundry_hosting-1.0.0a260521-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260521-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/33/5d/59e70b614e8bd64033a8ed9f47774334e731c4bc7bc5e1960073d81ca8db/agent_framework_foundry_hosting-1.0.0a260519-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260519-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/e5/c1/4467fbb1f5d3ccc5ae7c58795492ccc56bdb797f880f1950493a2508f7e1/agent_framework_foundry_hosting-1.0.0a260514-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260514-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/7d/73/0e8d6fd866c6dd0d1986ecfa2b67d76c880f30ce8897180f172fef7be9b0/agent_framework_foundry_hosting-1.0.0a260507-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260507-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/58/d0/ea46a34caf493fcb5ab0dcca9249f33cea40c293adb7547ccc84f75be03e/agent_framework_foundry_hosting-1.0.0a260429-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260429-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/c2/d5/f489906584eba50e2735cf5e7376abb508f647308b2e19784f3cd5b45e30/agent_framework_foundry_hosting-1.0.0a260428-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260428-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/b2/12/367eaaa0107b449dba77eb59e2540123b6796f745a5cddd1022156ab4303/agent_framework_foundry_hosting-1.0.0a260424-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260424-py3-none-any.whl.metadata (1.5 kB)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/08/c2/8a5e6aa6a141c2f1ba2d5b78dd8de23fd59ab0135271562ba51b2c9fabe1/agent_framework_foundry_hosting-1.0.0a260423-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260423-py3-none-any.whl.metadata (1.5 kB)
+Collecting azure-ai-agentserver-core==2.0.0b2 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-core==2.0.0b2 from https://files.pythonhosted.org/packages/69/35/cf8a034f86d653fa902edb5ffa0a86005ea941f2840d2fa27302484856c1/azure_ai_agentserver_core-2.0.0b2-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_core-2.0.0b2-py3-none-any.whl.metadata (6.3 kB)
+Collecting azure-ai-agentserver-responses==1.0.0b4 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-responses==1.0.0b4 from https://files.pythonhosted.org/packages/24/bd/c56df7c9257f10014ae1cd161ac08784bd9fe682233ab1a987c98b5b78c0/azure_ai_agentserver_responses-1.0.0b4-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_responses-1.0.0b4-py3-none-any.whl.metadata (11 kB)
+Collecting azure-ai-agentserver-invocations==1.0.0b2 (from agent-framework-foundry-hosting->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for azure-ai-agentserver-invocations==1.0.0b2 from https://files.pythonhosted.org/packages/0c/f4/057206e0fca266b30ea68a531fa425078fd883500e779d5552858fe33d5b/azure_ai_agentserver_invocations-1.0.0b2-py3-none-any.whl.metadata
+  Downloading azure_ai_agentserver_invocations-1.0.0b2-py3-none-any.whl.metadata (9.1 kB)
+Collecting agent-framework-foundry-hosting (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-foundry-hosting from https://files.pythonhosted.org/packages/46/36/d1e544b7b97e50b8779a7f63fdce950cec23b61b27f667de26b2382cf0b7/agent_framework_foundry_hosting-1.0.0a260421-py3-none-any.whl.metadata
+  Downloading agent_framework_foundry_hosting-1.0.0a260421-py3-none-any.whl.metadata (1.5 kB)
+Collecting agent-framework-devui (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/79/74/266066cfdbd4c3f1261699fad148a58e1b1810ef16a33e6cdea2ba63472d/agent_framework_devui-1.0.0b260709-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260709-py3-none-any.whl.metadata (19 kB)
+  Downloading agent_framework_devui-1.0.0b260630.tar.gz (359 kB)
+  Installing build dependencies: started
+  Running command installing build dependencies for agent-framework-devui
+  Using pip 25.3 from C:\Users\namit\.virtualenvs\namit-pGzEMgyL\Lib\site-packages\pip (python 3.10)
+  Collecting flit-core<4.0,>=3.11
+    Obtaining dependency information for flit-core<4.0,>=3.11 from https://files.pythonhosted.org/packages/f2/65/b6ba90634c984a4fcc02c7e3afe523fef500c4980fec67cc27536ee50acf/flit_core-3.12.0-py3-none-any.whl.metadata
+    Using cached flit_core-3.12.0-py3-none-any.whl.metadata (888 bytes)
+  Using cached flit_core-3.12.0-py3-none-any.whl (45 kB)
+  Installing collected packages: flit-core
+  Successfully installed flit-core-3.12.0
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Running command Getting requirements to build wheel
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Running command Preparing metadata (pyproject.toml)
+  Preparing metadata (pyproject.toml): finished with status 'done'
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/78/cd/2f233810f8e64aa05be922da81020da582044223f8edcb21d894ef08e8e6/agent_framework_devui-1.0.0b260528-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260528-py3-none-any.whl.metadata (19 kB)
+Collecting fastapi<0.138.1,>=0.121.0 (from agent-framework-ag-ui->agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for fastapi<0.138.1,>=0.121.0 from https://files.pythonhosted.org/packages/bf/b4/023e75a2ec3f5440e380df6caf4d28edc0806d007193e6fb0707237886a4/fastapi-0.133.0-py3-none-any.whl.metadata
+  Downloading fastapi-0.133.0-py3-none-any.whl.metadata (30 kB)
+Collecting agent-framework-devui (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/9a/00/69d1e944b0d12cefe62a536254d0ab32a0551132fde9b22fd06284270fb6/agent_framework_devui-1.0.0b260521-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260521-py3-none-any.whl.metadata (19 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/e6/88/9fc09aab0361b38831eafbd1f040d7126e3351d47f1dd3a05538ca74a353/agent_framework_devui-1.0.0b260519-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260519-py3-none-any.whl.metadata (19 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/d9/a8/2d628b2a6b9599265186c1e934eaf61bb4cb4181e260ac7882431ca5881c/agent_framework_devui-1.0.0b260514-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260514-py3-none-any.whl.metadata (19 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/fe/3a/8f61caf0112851ba9e9b87ae2aced5ab6cf71b49a6973159c8a0434937a2/agent_framework_devui-1.0.0b260507-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260507-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/9b/70/677d450f621e3587487ce7156ddb9602b0a2310bbb52f3eac6477187d220/agent_framework_devui-1.0.0b260429-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260429-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/2a/21/899a9edfcde34cd8aaac546c7177fd89d5a11ebd7ff1f19a6b9ee0cd2827/agent_framework_devui-1.0.0b260428-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260428-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/52/63/d411bfcf4445c2e41f043d98ff10a2bf5b9c7f4fa3c44165cc2b4e3f3535/agent_framework_devui-1.0.0b260424-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260424-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/9f/ed/dc3dc530762571e100df77aa3a6704130d71f48f62f821f0c71a0a155334/agent_framework_devui-1.0.0b260423-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260423-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/20/a7/d9d10cb7c9961c65dbf2261471e1f60b16a2aab129b8ce866e81632b7cd6/agent_framework_devui-1.0.0b260421-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260421-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/6e/ef/5f66cbfceb219cd11c124e950b9104319a16146e8ec0d64f8e610d95dd47/agent_framework_devui-1.0.0b260414-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260414-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/7e/9f/f4ff37b9c2267b661f81344f722d37fab739fea2d685572f00d798031fb1/agent_framework_devui-1.0.0b260409-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260409-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/4d/cb/93f2363d1feae4f52d08fa288221984f687c1b34361088b9699585c74a58/agent_framework_devui-1.0.0b260402-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260402-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/d2/3b/7ce68bf067d31afd50b3c754c21918963940be48e9677edacc70ea912b35/agent_framework_devui-1.0.0b260330-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260330-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/5f/34/b13d7c191708726bacb900ec413bc0d13f6956f6e0c986eea3df82c067f9/agent_framework_devui-1.0.0b260319-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260319-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/92/21/3504433fe89d28678dc865afa9c374ebb9b6a8be26c3dc9473bb42ff229b/agent_framework_devui-1.0.0b260311-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260311-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/e1/12/f1e4554e277dc61fa93e239a935c24295cbaa1239d541e66b102a62ef6a7/agent_framework_devui-1.0.0b260304-py3-none-any.whl.metadata
+  WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out. (read timeout=15)")': /packages/e1/12/f1e4554e277dc61fa93e239a935c24295cbaa1239d541e66b102a62ef6a7/agent_framework_devui-1.0.0b260304-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260304-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/da/e7/84b4d6b8c267019af8be169fe9182068c19d5edae63cda954066d93f5240/agent_framework_devui-1.0.0b260225-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260225-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/2a/13/d4925ded6e2d18c9066c90fbdbe7c6c3522d1ee1ba3c2d8965eade799486/agent_framework_devui-1.0.0b260219-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260219-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/03/76/02394e3c109e99c186d194799dad254fe2b110905712ef6f96ff9a151b08/agent_framework_devui-1.0.0b260212-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260212-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/99/1b/9b5d8accdc0b721530c60e34d5236370f3f875105c8f24da8642f046e29e/agent_framework_devui-1.0.0b260210-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260210-py3-none-any.whl.metadata (18 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/6e/85/7a6e3ca2c0473c0902b1eeca30f3ab3c02b58f80dfde8a6d096abfbf6b9c/agent_framework_devui-1.0.0b260130-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260130-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/80/04/d5874d4ffad26d96e95cbafd31f731ccddd5f662cddf3b6c465a36cf7915/agent_framework_devui-1.0.0b260128-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260128-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/22/45/3f82d9cad87de31049ac273d7a26103a335bcd1035ca9d998f97ce363bdb/agent_framework_devui-1.0.0b260127-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260127-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/cd/36/c87803f7b03551a0e47537721daafc75a2a98cfccc64832f9400c76fcc03/agent_framework_devui-1.0.0b260123-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260123-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/54/d9/2f9c597c7f7b55caff4e8f3d1e68d4e1a06603eb76c6e1732eb6c5967dec/agent_framework_devui-1.0.0b260116-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260116-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/09/24/5b913b576fad4d58d45f97b7bf1e36feca76621d7a3ef2bbbf7bc3fc5334/agent_framework_devui-1.0.0b260114-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260114-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/2d/b9/c7b6c12b4e0bfd6f4d4671512cd5805477abf9d1d93201786d24d969bcf2/agent_framework_devui-1.0.0b260107-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260107-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/91/1f/363e9b9d5b4a6addc2dc63726e21ae9b780064db5e6e1c0e4fdadb3952f3/agent_framework_devui-1.0.0b260106-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b260106-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/ed/16/f91ef7153ee36750103ed80c3a7a46e071e14362f9e64e060dce052ec8f2/agent_framework_devui-1.0.0b251223-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251223-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/fc/4c/451585ecc75f93d23fbc6c3c42deba8ff1a3ffce1384fea178017a0a911e/agent_framework_devui-1.0.0b251218-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251218-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/74/1a/456933a67d32569eac9d7d0eb127bc2ab1a59a3d2c44d3a6503774c05b98/agent_framework_devui-1.0.0b251216-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251216-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/d8/68/2f0d42ef3eb9bbeaea98d976f1f79ab6b2d273e1964e6fba4c01cb6a3d2d/agent_framework_devui-1.0.0b251211-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251211-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/96/be/de8270e7ca3e47fce44fb017deb12f5e55e7629888ebddc086a5b1018d80/agent_framework_devui-1.0.0b251209-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251209-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/ed/57/73ed7bdb754970f02c912af8f2d984e93dcfc4529b75f5ee8adeee75003e/agent_framework_devui-1.0.0b251204-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251204-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/81/37/e2ba31aa7ad81218c4fc2f3dc9badc65625ad360e973a5ce5c6ac99d9efc/agent_framework_devui-1.0.0b251120-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251120-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/53/21/359592eda88e88d8215a5941d120935588bbb7454336514c5353b4ae6240/agent_framework_devui-1.0.0b251114-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251114-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/db/36/61082b6b3127268f0261c6be6d92bc437c632372064acda5240e40912438/agent_framework_devui-1.0.0b251112.post1-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251112.post1-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/ce/7f/de16d6e10d738bda13374b186f58e924ace75ff63f883440329e3c6ffa5f/agent_framework_devui-1.0.0b251112-py3-none-any.whl.metadata
+  WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out. (read timeout=15)")': /packages/ce/7f/de16d6e10d738bda13374b186f58e924ace75ff63f883440329e3c6ffa5f/agent_framework_devui-1.0.0b251112-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251112-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/6d/c7/92b6663079c8131c6f2b85c9b2f408ad9907e2dead3c09ad0c76f2a778bf/agent_framework_devui-1.0.0b251111-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251111-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/5c/47/40601d0e349fbfbf80bedddcc6c556e53fee5555bd7b587ced9f20a004f0/agent_framework_devui-1.0.0b251108-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251108-py3-none-any.whl.metadata (17 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/1f/e3/c3e2b000934a509a7f79fd9f7b4b9c39e0349b4c8adaf36b877a2c55ee72/agent_framework_devui-1.0.0b251105-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251105-py3-none-any.whl.metadata (14 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/a4/8d/f594c3f3656caf321d367ec94df1e21a64a97124e5924c05be83e894edd8/agent_framework_devui-1.0.0b251104-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251104-py3-none-any.whl.metadata (14 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/e8/6b/d39b0c9295abb035ea46c56678b1321c3a4d3266ec11cc97097ca1cf5b74/agent_framework_devui-1.0.0b251028-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251028-py3-none-any.whl.metadata (14 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/46/c3/87071084f817b21c3aecf80ee56d41df98ed64081a35ce8d03fd4e7ce803/agent_framework_devui-1.0.0b251016-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251016-py3-none-any.whl.metadata (11 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/5d/b6/ab40dc4f768104bfaa43523e003c88aded8f79428f6c73a22f9547ddc752/agent_framework_devui-1.0.0b251007-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251007-py3-none-any.whl.metadata (6.3 kB)
+  Obtaining dependency information for agent-framework-devui from https://files.pythonhosted.org/packages/7b/43/a124de5659272e967e75cdcdea407facf3e6b94becf0b1218297ed59d502/agent_framework_devui-1.0.0b251001-py3-none-any.whl.metadata
+  Downloading agent_framework_devui-1.0.0b251001-py3-none-any.whl.metadata (6.2 kB)
+Collecting agent-framework-copilotstudio (from agent-framework-core[all]==1.12.1->agent-framework)
+  Obtaining dependency information for agent-framework-copilotstudio from https://files.pythonhosted.org/packages/50/95/8017fcce31f39bfdd91f190e202b8cb7ba840715804808925ced9218679e/agent_framework_copilotstudio-1.0.0b260709-py3-none-any.whl.metadata
+  Downloading agent_framework_copilotstudio-1.0.0b260709-py3-none-any.whl.metadata (4.4 kB)

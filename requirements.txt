@@ -1,0 +1,20 @@
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+matplotlib>=3.7
+openai>=1.40
+python-dotenv>=1.0
+streamlit>=1.35
+
+# Optional - only needed for orchestration/agent_pipeline.py, the alternative
+# where a single Agent decides step order from a system prompt (closer to the
+# original project's AutoGen design). main.py's default path is four plain
+# sequential function calls and does not need this dependency at all.
+#
+# Microsoft Agent Framework, the successor to AutoGen + Semantic Kernel.
+# Deliberately NOT the `agent-framework` meta-package - it pulls in
+# agent-framework-core[all], dragging in copilotstudio/devui/azure connectors
+# we don't use and making pip's resolver crawl through dozens of prerelease
+# versions of each.
+agent-framework-core>=1.8
+agent-framework-openai>=1.8
