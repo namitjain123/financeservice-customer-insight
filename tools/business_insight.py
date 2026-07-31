@@ -33,12 +33,15 @@ SENTIMENT_COLORS = {"Negative": "#E45756", "Neutral": "#F2CF5B", "Positive": "#7
 
 
 def _top_pain_points(df: pd.DataFrame, top_n: int) -> tuple[pd.Series, str]:
+    # One row per complaint (Step 2 clusters complaints, not topic phrases),
+    # so this counts complaints per theme, not topic mentions - a complaint
+    # contributes to exactly one theme, never inflating more than one bar.
     counts = df.groupby("general_topic_l1").size().sort_values(ascending=False).head(top_n)
 
     fig, ax = plt.subplots(figsize=(10, 6))
     counts.iloc[::-1].plot(kind="barh", ax=ax, color="#4C78A8")
     ax.set_title(f"Top {top_n} Customer Pain Points")
-    ax.set_xlabel("Mentions")
+    ax.set_xlabel("Complaints")
     ax.set_ylabel("Theme")
     fig.tight_layout()
 
@@ -129,7 +132,7 @@ def _theme_trends(df: pd.DataFrame, top_themes: list[str]) -> str:
         ax.plot(sub["month"], sub["count"], marker="o", label=theme)
 
     ax.set_title("Theme Trends Over Time (Top Themes)")
-    ax.set_ylabel("Mentions per Month")
+    ax.set_ylabel("Complaints per Month")
     ax.set_xlabel("Month")
     ax.legend(title="Theme", bbox_to_anchor=(1.04, 1), loc="upper left")
     fig.tight_layout()

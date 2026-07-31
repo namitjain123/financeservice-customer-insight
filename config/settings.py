@@ -69,7 +69,7 @@ EVAL_HOLDOUT_CSV = DATA / "eval_holdout.csv"
 TOPICS_CSV = ARTIFACTS / "df_with_topics.csv"
 CLUSTERS_CSV = ARTIFACTS / "df_with_clusters.csv"
 OUTPUT_CSV = ARTIFACTS / "output.csv"
-EMBEDDING_CACHE = ARTIFACTS / "topic_embeddings.npz"
+EMBEDDING_CACHE = ARTIFACTS / "complaint_embeddings.npz"
 RUN_MANIFEST = ARTIFACTS / "run_manifest.json"
 
 # --- schema -----------------------------------------------------------------

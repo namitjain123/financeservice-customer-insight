@@ -11,18 +11,27 @@ ARI - "which k makes my clusters agree with the true taxonomy?" - which is
 the question that actually matters. Silhouette is still reported alongside,
 so you can see directly where the two disagree.
 
-Uses the cached embeddings from topic_clustering.py, so sweeping costs zero
-additional API calls.
+Uses the cached embeddings from topic_clustering.py (one vector per complaint,
+embedded from its narrative), so sweeping costs zero additional API calls -
+each k just re-clusters the same cached vectors.
+
+Two ground-truth granularities to sweep against - pick with a trailing arg:
+  issue     (default) the real CFPB Issue field - 60-80 fine-grained categories.
+            k has to reach into that range before ARI can rise much, which
+            trades away the interpretability of a small, business-readable
+            cluster count.
+  product   input.csv's `product` column - 11 balanced categories a business
+            reader already recognises (Mortgage, Credit card, ...). A fairer
+            target for a small k, since it doesn't ask 12 clusters to resolve
+            distinctions finer than the k you're actually choosing.
 
 Usage:
-    python -m eval.choose_k              # sweep k = 2..30
-    python -m eval.choose_k 5 40 2        # sweep k = 5..40 step 2
+    python -m eval.choose_k                       # sweep k=2..30 against Issue
+    python -m eval.choose_k 5 40 2                 # sweep k=5..40 step 2 against Issue
+    python -m eval.choose_k 2 20 1 product          # sweep k=2..20 against product
 """
 
 from __future__ import annotations
-
-import ast
-from collections import Counter
 
 import numpy as np
 import pandas as pd
@@ -30,13 +39,30 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score
 
 from config import settings
+from tools.topic_clustering import _normalise
+
+# Which file + column to treat as ground truth. "product" is deliberately
+# sourced from input.csv, not ground_truth.csv - it's descriptive metadata
+# about the complaint (what it's about), not part of the answer key the
+# pipeline is scored against for topic/sentiment extraction.
+TRUTH_SOURCES = {
+    "issue": (settings.GROUND_TRUTH_CSV, "Issue"),
+    "product": (settings.INPUT_CSV, settings.PRODUCT_COLUMN),
+}
+
+# Categories below this many examples can't be recovered by any unsupervised
+# method - there's no pattern to learn from a single example - so scoring
+# against them only penalises ARI for a task that isn't learnable from this
+# data, not for a real clustering failure. Excluded once, up front, so every
+# k in the sweep is scored against the same fair set of categories.
+MIN_CATEGORY_SUPPORT = 10
 
 
 def sweep(
     k_values: range,
-    topics_csv=settings.TOPICS_CSV,
-    ground_truth_csv=settings.GROUND_TRUTH_CSV,
+    truth: str = "issue",
     embedding_cache=settings.EMBEDDING_CACHE,
+    min_category_support: int = MIN_CATEGORY_SUPPORT,
 ) -> pd.DataFrame:
     if not embedding_cache.exists():
         raise FileNotFoundError(
@@ -44,34 +70,37 @@ def sweep(
             "least once first so embeddings are cached."
         )
 
-    cached = np.load(embedding_cache, allow_pickle=True)
-    topics = list(cached["topics"])
-    embeddings = cached["embeddings"]
-    embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
+    truth_csv, truth_column = TRUTH_SOURCES[truth]
 
-    df = pd.read_csv(topics_csv)
-    df["topics_parsed"] = df["all_topics_discussed"].apply(ast.literal_eval)
-    truth = pd.read_csv(ground_truth_csv)
-    truth_by_id = dict(zip(truth[settings.ID_COLUMN], truth["Issue"]))
+    cached = np.load(embedding_cache, allow_pickle=True)
+    ids = list(cached["keys"])
+    embeddings = _normalise(cached["embeddings"])
+
+    truth_df = pd.read_csv(truth_csv)
+    truth_by_id = dict(zip(truth_df[settings.ID_COLUMN], truth_df[truth_column]))
+    true_labels = pd.Series([truth_by_id.get(i) for i in ids])
+
+    matched_truth = true_labels.dropna()
+    category_counts = matched_truth.value_counts()
+    sparse = set(category_counts[category_counts < min_category_support].index)
+    if sparse:
+        n_dropped = int(matched_truth.isin(sparse).sum())
+        print(f"  excluding {len(sparse)}/{len(category_counts)} categories with "
+              f"< {min_category_support} examples ({n_dropped}/{len(matched_truth)} complaints)\n")
+
+    scorable = true_labels.notna() & ~true_labels.isin(sparse)
 
     rows = []
     for k in k_values:
-        if k >= len(topics):
+        if k >= len(ids):
             continue
 
-        labels = KMeans(n_clusters=k, random_state=settings.RANDOM_SEED, n_init=10).fit_predict(
-            embeddings
-        )
-        topic_to_cluster = {t: int(c) for t, c in zip(topics, labels)}
+        labels = KMeans(
+            n_clusters=k, random_state=settings.RANDOM_SEED, n_init=10
+        ).fit_predict(embeddings)
 
-        pred_cluster, true_issue = [], []
-        for _, row in df.iterrows():
-            true = truth_by_id.get(row[settings.ID_COLUMN])
-            if true is None:
-                continue
-            ids = [topic_to_cluster[t] for t in row["topics_parsed"]]
-            pred_cluster.append(Counter(ids).most_common(1)[0][0])
-            true_issue.append(true)
+        pred_cluster = labels[scorable.to_numpy()]
+        true_issue = true_labels[scorable].tolist()
 
         sil = silhouette_score(embeddings, labels, metric="cosine")
         ari = adjusted_rand_score(true_issue, pred_cluster)
@@ -87,14 +116,23 @@ def sweep(
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) >= 3:
-        lo, hi = int(sys.argv[1]), int(sys.argv[2])
-        step = int(sys.argv[3]) if len(sys.argv) > 3 else 1
+    args = sys.argv[1:]
+    truth_name = "issue"
+    if args and args[-1] in TRUTH_SOURCES:
+        truth_name = args.pop()
+
+    if len(args) >= 2:
+        lo, hi = int(args[0]), int(args[1])
+        step = int(args[2]) if len(args) > 2 else 1
         k_range = range(lo, hi + 1, step)
     else:
         k_range = range(2, 31)
 
-    results = sweep(k_range)
+    truth_csv, truth_column = TRUTH_SOURCES[truth_name]
+    print(f"sweeping against '{truth_column}' from {truth_csv.name} "
+          f"({pd.read_csv(truth_csv)[truth_column].nunique()} categories)\n")
+
+    results = sweep(k_range, truth=truth_name)
 
     best_ari = results.loc[results["ari"].idxmax()]
     best_sil = results.loc[results["silhouette"].idxmax()]

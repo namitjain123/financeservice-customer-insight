@@ -1,10 +1,10 @@
 """Step 3 - turn numbered clusters into business-readable theme names.
 
-Step 2 leaves every topic phrase tagged with a bare integer, e.g. cluster `4`.
-That means nothing to a reader. This step shows each cluster's phrases to the
-LLM and asks for a short label - "Foreclosure process failures", "Credit
-reporting accuracy disputes" - then explodes the data to one row per topic so
-each row carries its own theme.
+Step 2 leaves every complaint tagged with a bare integer, e.g. cluster `4`.
+That means nothing to a reader. This step shows each cluster's topic phrases
+to the LLM and asks for a short label - "Foreclosure process failures",
+"Credit reporting accuracy disputes" - then attaches that label to every
+complaint in the cluster.
 
 Differences from the original survey pipeline this replaces:
   * real JSON mode instead of a bare json.loads() on unvalidated content
@@ -93,37 +93,33 @@ async def _label_one(client: AsyncOpenAI, cluster_id: int, topics: list[str]) ->
 
 
 def _cluster_topic_map(df: pd.DataFrame) -> dict[int, list[str]]:
-    """cluster_id -> every topic phrase assigned to it, across all complaints."""
+    """cluster_id -> every topic phrase from complaints assigned to it.
+
+    A complaint's cluster_id is one value (Step 2 clusters complaints, not
+    individual phrases) - all of that complaint's topics are still useful
+    context for the LLM to see what the cluster is about.
+    """
     topics_series = df["all_topics_discussed"].apply(ast.literal_eval)
-    ids_series = df["topic_cluster_ids"].apply(ast.literal_eval)
 
     clusters: dict[int, list[str]] = {}
-    for topics, ids in zip(topics_series, ids_series):
-        for topic, cid in zip(topics, ids):
-            clusters.setdefault(int(cid), []).append(str(topic))
+    for topics, cid in zip(topics_series, df["cluster_id"]):
+        clusters.setdefault(int(cid), []).extend(str(t) for t in topics)
     return clusters
 
 
-def _explode(df: pd.DataFrame, labels: dict[int, str]) -> pd.DataFrame:
-    """One row per topic, each carrying its cluster's label.
+def _label_rows(df: pd.DataFrame, labels: dict[int, str]) -> pd.DataFrame:
+    """One row per complaint, carrying its cluster's label.
 
-    A complaint with 3 topics becomes 3 rows. This is deliberate: it's the
-    long format BI tools (Power BI, Tableau) expect, and what Step 4's
-    groupby/pivot charts are built against.
+    Step 2 now clusters complaints directly (one cluster_id per complaint),
+    so there's no per-topic fan-out to reconstruct here - unlike the earlier
+    per-topic-cluster design, a complaint contributes to exactly one theme.
     """
-    topics_series = df["all_topics_discussed"].apply(ast.literal_eval)
-    ids_series = df["topic_cluster_ids"].apply(ast.literal_eval)
-
-    rows = []
-    for (_, row), topics, ids in zip(df.iterrows(), topics_series, ids_series):
-        base = row.to_dict()
-        for topic, cid in zip(topics, ids):
-            r = dict(base)
-            r["topic_discussed"] = topic
-            r["general_topic_l1"] = labels[int(cid)]
-            rows.append(r)
-
-    return pd.DataFrame(rows)
+    out = df.copy()
+    out["general_topic_l1"] = out["cluster_id"].map(labels)
+    out["topic_discussed"] = out["all_topics_discussed"].apply(
+        lambda raw: "; ".join(ast.literal_eval(raw))
+    )
+    return out
 
 
 async def label_clusters(
@@ -146,7 +142,7 @@ async def label_clusters(
     labels = {r["cluster_id"]: r["label"] for r in results}
     fallbacks = [r for r in results if not r["ok"]]
 
-    out = _explode(df, labels)
+    out = _label_rows(df, labels)
     out.to_csv(output_csv, index=False)
 
     theme_counts = out["general_topic_l1"].value_counts()
@@ -156,7 +152,7 @@ async def label_clusters(
         "clusters_labelled": len(labels),
         "clusters_using_fallback_name": len(fallbacks),
         "fallback_cluster_ids": [f["cluster_id"] for f in fallbacks],
-        "total_topic_rows": len(out),
+        "output_rows": len(out),
         "theme_counts": theme_counts.to_dict(),
         "largest_theme_share": round(float(theme_counts.max() / theme_counts.sum()), 3),
         "output_path": str(output_csv),
