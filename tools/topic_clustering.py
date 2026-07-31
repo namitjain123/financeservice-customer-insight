@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import ast
 import json
+import time
 from typing import Any
 
 import numpy as np
@@ -30,11 +31,21 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
 from config import settings
-from models.llm_client import get_client
+from models.llm_client import get_embed_client
+from tools.topic_extraction import _is_retryable
 
 # Conservative batch size - well under provider limits, and small enough that a
 # transient failure costs one batch rather than the whole corpus.
+#
+# The embedding endpoint has its OWN quota, separate from the chat model's -
+# on a free-tier key this has been observed as "100 embedding units/minute."
+# A single 100-phrase batch consumes the entire window in one call, so the
+# very next batch always 429s immediately afterward. That is not a rare edge
+# case here, it is the expected steady state for any run with >100 unique
+# topics - hence the retry loop below, not just a bigger batch size.
 EMBED_BATCH = 100
+EMBED_RETRIES = 6
+EMBED_RETRY_DELAY = 20.0  # seconds; the observed quota window is ~1 minute
 
 
 def _unique_topics(series: pd.Series) -> list[str]:
@@ -43,18 +54,35 @@ def _unique_topics(series: pd.Series) -> list[str]:
     return sorted({t for row in parsed for t in row})
 
 
+def _embed_batch(client, batch: list[str]) -> list[list[float]]:
+    """One batch, with retry on the embedding endpoint's own rate limit."""
+    kwargs: dict[str, Any] = {"model": settings.EMBED_MODEL, "input": batch}
+    if settings.EMBED_DIMENSIONS:
+        kwargs["dimensions"] = settings.EMBED_DIMENSIONS
+
+    last_exc: Exception | None = None
+    for attempt in range(EMBED_RETRIES):
+        try:
+            resp = client.embeddings.create(**kwargs)
+            return [item.embedding for item in resp.data]
+        except Exception as exc:  # noqa: BLE001 - retry loop, re-raised if exhausted
+            last_exc = exc
+            if not _is_retryable(exc) or attempt == EMBED_RETRIES - 1:
+                raise
+            print(f"    embedding batch rate-limited, waiting {EMBED_RETRY_DELAY:.0f}s "
+                  f"(attempt {attempt + 1}/{EMBED_RETRIES})")
+            time.sleep(EMBED_RETRY_DELAY)
+    raise last_exc  # unreachable, satisfies type checkers
+
+
 def _embed(topics: list[str]) -> np.ndarray:
     """Embed every phrase, in batches. Returns an (n_topics, dim) array."""
-    client = get_client()
+    client = get_embed_client()
     vectors: list[list[float]] = []
 
     for start in range(0, len(topics), EMBED_BATCH):
         batch = topics[start : start + EMBED_BATCH]
-        kwargs: dict[str, Any] = {"model": settings.EMBED_MODEL, "input": batch}
-        if settings.EMBED_DIMENSIONS:
-            kwargs["dimensions"] = settings.EMBED_DIMENSIONS
-        resp = client.embeddings.create(**kwargs)
-        vectors.extend(item.embedding for item in resp.data)
+        vectors.extend(_embed_batch(client, batch))
         print(f"  embedded {min(start + EMBED_BATCH, len(topics)):>6,} / {len(topics):,}")
 
     return np.asarray(vectors, dtype=np.float32)

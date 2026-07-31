@@ -1,348 +1,363 @@
-# Financial Services Customer Insights — Dataset
+# Financial Services Customer Insights
 
-An LLM pipeline that turns unstructured consumer complaints into themed, analytics-ready
-data. This document covers **how the dataset was built** — where the raw data came from,
-every filter applied, and every transformation performed.
-
-The dataset is derived from the [CFPB Consumer Complaint Database](https://www.consumerfinance.gov/data-research/consumer-complaints/),
-chosen specifically because it ships with **human-assigned category labels** (`Issue` /
-`Sub-issue`). Those labels are held out of the pipeline and used as ground truth to measure
-whether the unsupervised clustering actually recovers real categories — which is what
-separates this from a pipeline that merely produces plausible-looking output.
-
----
-
-## Source data
-
-| | |
-|---|---|
-| Source | CFPB Consumer Complaint Database (bulk download) |
-| File | `complaints.csv.zip` |
-| Size | 1.33 GB compressed / **8.54 GB** uncompressed |
-| Rows | **17,270,511** |
-| Columns | 16 |
-| Retrieved | 2026-07-27 |
-| Licence | Public domain (US Government work) |
-
-The bulk download is the complete database — every complaint since 2011, unfiltered. All
-filtering is done locally by the scripts in `scripts/`, so the process is reproducible and
-auditable rather than depending on choices made in a web UI.
-
----
-
-## Pipeline overview
+An LLM pipeline that turns unstructured consumer complaints into a labelled,
+analytics-ready dataset and four executive charts — and, unlike most pipelines
+like this, **measures whether the clustering is actually right**, instead of
+just producing plausible-looking output.
 
 ```
-complaints.csv.zip              17,270,511 rows   8.54 GB
+raw complaint (free text)
         │
-        │  scripts/extract_from_bulk.py      (streamed in 200k-row chunks)
         ▼
-data/cfpb_filtered.csv             781,473 rows   1,019 MB
-        │
-        │  scripts/prepare_cfpb.py           (clean → canonicalise → stratify)
-        ▼
-data/input.csv                       3,000 rows   3.3 MB
-data/ground_truth.csv                3,000 rows
-data/eval_holdout.csv                  200 rows
+  ┌─────────────┐   ┌──────────────┐   ┌───────────────┐   ┌──────────────────┐
+  │ 1. Extract  │──▶│ 2. Cluster   │──▶│ 3. Label      │──▶│ 4. Business       │
+  │    topics   │   │    topics    │   │    clusters   │   │    insights       │
+  └─────────────┘   └──────────────┘   └───────────────┘   └──────────────────┘
+        │                   │                  │                     │
+   LLM extracts       embeds + KMeans     LLM names each        4 executive
+   2-5 issues per      groups similar      cluster, explodes     charts (pandas
+   complaint            phrases            to one row/topic      + matplotlib)
+```
+
+```
+                              ┌────────────────────┐
+                              │  eval/              │
+                              │  cluster_eval.py     │◀── scores clusters against
+                              │  choose_k.py          │    ground_truth.csv (real
+                              └────────────────────┘    CFPB `Issue` labels)
+```
+
+## Why this project exists
+
+Most "LLM pipeline" portfolio projects extract topics, cluster them, and stop —
+there is no way to tell whether the clusters mean anything. This one is built
+around the [CFPB Consumer Complaint Database](https://www.consumerfinance.gov/data-research/consumer-complaints/),
+chosen specifically because every complaint carries a **human-assigned category**
+(`Issue` / `Sub-issue`). Those labels are held out of the pipeline entirely —
+they never appear in `data/input.csv` — and used afterward as ground truth to
+answer the question that actually matters: *does the unsupervised clustering
+recover the real taxonomy, or did it just look reasonable?*
+
+See [`data.md`](data.md) for the full data pipeline: how 17.3M raw CFPB
+complaints were filtered down to the working 3,000-row sample, every cleaning
+step, and the reasoning behind each one.
+
+---
+
+## Project structure
+
+```
+.
+├── README.md                 this file
+├── data.md                   how the dataset was built (extraction, cleaning, sampling)
+├── main.py                   CLI entry point - runs all 4 steps in sequence
+├── requirements.txt
+├── .env.example               copy to .env and add your Gemini API key
+│
+├── config/
+│   └── settings.py           every path, model name, and tunable in one place
+├── models/
+│   └── llm_client.py         Gemini client factory (OpenAI-compatible endpoint)
+│
+├── tools/                    the four pipeline steps - plain async functions
+│   ├── topic_extraction.py       Step 1
+│   ├── topic_clustering.py       Step 2
+│   ├── cluster_labelling.py      Step 3
+│   └── business_insight.py       Step 4
+│
+├── eval/                     ground-truth evaluation - the project's differentiator
+│   ├── cluster_eval.py           ARI / NMI / per-cluster purity vs real Issue labels
+│   └── choose_k.py               sweeps k, picks the value that best matches ground truth
+│
+├── orchestration/
+│   └── agent_pipeline.py     optional: single Agent + system prompt decides step order
+│                              (main.py does NOT use this - see "Two ways to run it" below)
+│
+├── MCP/
+│   └── server.py             optional: exposes the four tools over MCP for external clients
+│
+├── scripts/                  one-time data preparation (see data.md)
+│   ├── extract_from_bulk.py
+│   ├── prepare_cfpb.py
+│   └── silhouette_check.py
+│
+├── data/
+│   ├── input.csv              3,000 complaints - what the pipeline reads (no labels)
+│   ├── ground_truth.csv       Issue/Sub-issue answer key, keyed by complaint_id
+│   └── eval_holdout.csv       200-row slice for manual quality review
+│
+└── artifacts/                 pipeline output - regenerated by every run, gitignored
+    ├── df_with_topics.csv         Step 1 output
+    ├── df_with_clusters.csv       Step 2 output
+    ├── output.csv                 Step 3 output (final labelled, exploded dataset)
+    └── *.png                      Step 4's four charts
 ```
 
 ---
 
-## Stage 1 — extraction
-
-`scripts/extract_from_bulk.py` streams the zip in 200,000-row chunks so memory stays flat
-regardless of file size. Three filters are applied to every chunk.
-
-### Filter 1 — must have a narrative
-
-```python
-chunk = chunk[chunk["Consumer complaint narrative"].notna()]
-```
-
-The pipeline's entire input is free text. Most complaints in the database have no narrative
-at all — text is only published where the consumer explicitly consented at submission. Rows
-without it are unusable here.
-
-### Filter 2 — 2023 onwards
-
-```python
-chunk = chunk[dates >= "2023-01-01"]
-```
-
-The raw data reaches back to 2011. Three and a half years is ample for monthly trend
-analysis and keeps the working pool manageable. The surviving pool spans **43 months**
-(2023-01 → 2026-07).
-
-> The bulk file mixes two date formats in the same column — `2023-04-11` and
-> `2023-04-11T09:07:47Z`. Parsing requires `format="mixed"`; without it pandas raises on
-> the first inconsistent row.
-
-### Filter 3 — credit reporting downsampled (not excluded)
-
-Credit reporting is by far the largest category in the database:
-
-| Product label | Rows |
-|---|---:|
-| `Credit reporting or other personal consumer reports` | 11,721,597 |
-| `Credit reporting, credit repair services, or other personal consumer reports` | 2,163,780 |
-| `Credit reporting` | 140,426 |
-| **Total** | **14,025,803 — 81.2% of the database** |
-
-Three strings, one category — CFPB renamed it as the taxonomy evolved, and complaints keep
-whatever label was current when filed.
-
-It is **randomly downsampled to 3%** of the pool, *not excluded*. The reasoning matters:
-
-- The category is legitimate and the largest real-world one. Dropping it would make the
-  dataset unrepresentative and the choice hard to defend.
-- Its volume dominance is already handled downstream by the per-product cap in Stage 2.
-- Downsampling exists purely to keep `cfpb_filtered.csv` around 1 GB rather than ~4 GB.
-  A random subset of a random subset is still random, so the final sample is unaffected.
-
-Measured characteristics of this category (full-database scan, post-2023):
-
-| | |
-|---|---|
-| Complaints with narratives | 1,896,241 |
-| Narrative rate | 17.9% |
-| Distinct `Issue` values | 23 |
-| Top-2 issue concentration | 77% |
-| Median narrative length | 109 words |
-
-It is more concentrated than other products (top-2 at 77% vs ~28% elsewhere), which is a
-reason to cap it — not to remove it. Pass `--cr-fraction 1.0` to retain all 1.9M rows, or
-`--cr-fraction 0` to exclude the category entirely.
-
-### Stage 1 output
-
-**781,473 rows (4.52% of source) · 1,019 MB · 91 distinct `Issue` values · 43 months**
-
-Narrative length distribution in the pool:
-
-| p10 | p25 | p50 | p75 | p90 | p99 | max |
-|---:|---:|---:|---:|---:|---:|---:|
-| 36 | 68 | **128** | 242 | 398 | 1,020 | 6,469 |
-
-90% of narratives are under 400 words — much shorter than a small sample from the CFPB web
-search UI suggests, because that interface ranks results in a way that surfaces long,
-detailed complaints first.
-
----
-
-## Stage 2 — cleaning and sampling
-
-`scripts/prepare_cfpb.py` turns the pool into the working set.
-
-### Column selection and renaming
-
-| CFPB column | Pipeline column |
-|---|---|
-| `Date received` | `date` |
-| `Product` | `product` |
-| `Sub-product` | `sub_product` |
-| `Consumer complaint narrative` | `narrative` |
-| `Company` | `company` |
-| `State` | `state` |
-| `Submitted via` | `channel` |
-| `Complaint ID` | `complaint_id` |
-| `Issue`, `Sub-issue` | *held out as ground truth* |
-
-### Key integrity
-
-```python
-df = df[df["complaint_id"].notna()]
-df["complaint_id"] = df["complaint_id"].astype("int64")
-```
-
-Nulls elsewhere in the bulk file coerce this column to float, which writes ids as
-`10298545.0` and silently breaks the join to `ground_truth.csv`.
-
-### Canonical product mapping
-
-CFPB has renamed several product categories over the years. Grouping on the raw strings
-treats each historical label as a distinct product, so a category renamed twice receives
-double the sample weight. The mapping collapses variants **before** any grouping:
-
-| Raw labels | Canonical |
-|---|---|
-| `Credit reporting` · `Credit reporting or other personal consumer reports` · `Credit reporting, credit repair services, or other personal consumer reports` | `Credit reporting` |
-| `Payday loan` · `Payday loan, title loan, or personal loan` · `Payday loan, title loan, personal loan, or advance loan` | `Payday/title/personal loan` |
-| `Credit card` · `Credit card or prepaid card` | `Credit card` |
-| `Checking or savings account` · `Bank account or service` | `Checking or savings account` |
-| `Vehicle loan or lease` · `Consumer Loan` | `Vehicle or consumer loan` |
-| `Money transfer, virtual currency, or money service` · `Money transfers` · `Virtual currency` | `Money transfer or virtual currency` |
-
-Result: **14 raw labels → 11 canonical products.**
-
-`Other`, `Other financial service` and `Non-financial product/service` are dropped — a few
-hundred rows, too vague to form a meaningful theme. This exclusion is a separate, explicit
-step rather than being folded into a filter, so the modelling decision stays visible.
-
-**Two mappings are judgment calls, not facts:**
-
-- `Credit card or prepaid card` → `Credit card`. The legacy label covers both products with
-  no clean way to split; credit card dominates the volume. `Prepaid card` remains separate.
-- `Consumer Loan` → `Vehicle or consumer loan`. The old label spanned vehicle, personal,
-  title and pawn loans. A defensible approximation, not a correct one.
-
-### Text cleaning
-
-CFPB redacts PII before publication, leaving heavy artefact tokens. Left raw, these dominate
-the embedding space and degrade clustering — in some narratives roughly 9% of tokens are
-redaction markers, with runs of 40+ consecutive `XXXX`.
-
-| Pattern | Replacement |
-|---|---|
-| `{$9800.00}` | `[AMOUNT]` |
-| `XX/XX/XXXX`, `XX/XX` | `[DATE]` |
-| `XXXX` (2+ consecutive X) | `[REDACTED]` |
-| Repeated `[REDACTED]` runs | single `[REDACTED]` |
-| Whitespace runs | single space |
-
-### Length bounds
-
-```python
-df = df[(df["word_count"] >= 30) & (df["word_count"] <= 3000)]
-```
-
-Under 30 words there is nothing to extract topics from; over 3,000 the text is typically a
-pasted legal dossier rather than a complaint. Applied **after** cleaning, since collapsing
-redaction runs shortens narratives and pushes some below the floor.
-
-**781,473 → 726,023 usable rows.**
-
-### Stratified sampling
-
-```
-3,000 target ÷ 11 canonical products ≈ 272 per product
-```
-
-Every product reaches its cap, giving a balanced sample.
-
-### Truncation
-
-First 400 words retained. Consumers state their core problem up front, and this bounds
-step-1 token cost. Only affects the ~10% of narratives above that length.
-
-### Ground-truth split
-
-`Issue` and `Sub-issue` are written to a separate file keyed by `complaint_id`. **They never
-appear in `input.csv`**, so there is no path for labels to leak into a prompt — verified
-after every run.
-
----
-
-## Output files
-
-### `data/input.csv` — 3,000 rows
-
-What the pipeline reads. Contains no labels.
-
-| Column | Type | Notes |
-|---|---|---|
-| `complaint_id` | int64 | join key |
-| `date` | str | `YYYY-MM-DD` |
-| `product` | str | canonical, 11 values |
-| `sub_product` | str | |
-| `company` | str | |
-| `state` | str | |
-| `channel` | str | constant `Web` — see limitations |
-| `narrative` | str | cleaned, ≤400 words |
-| `word_count` | int | post-truncation |
-
-Product balance:
-
-| Product | Rows |
-|---|---:|
-| Money transfer or virtual currency | 275 |
-| Checking or savings account | 274 |
-| Credit card | 274 |
-| Student loan | 273 |
-| Mortgage | 272 |
-| Debt or credit management | 272 |
-| Payday/title/personal loan | 272 |
-| Prepaid card | 272 |
-| Credit reporting | 272 |
-| Vehicle or consumer loan | 272 |
-| Debt collection | 272 |
-
-**79 distinct `Issue` labels · 43 months · median 149 words**
-
-### `data/ground_truth.csv` — 3,000 rows
-
-`complaint_id`, `Issue`, `Sub-issue`. The answer key for evaluating clustering.
-
-### `data/eval_holdout.csv` — 200 rows
-
-A labelled subset for scoring topic-extraction quality.
-
-### `data/cfpb_filtered.csv` — 781,473 rows, 1,019 MB
-
-Intermediate pool. Git-ignored (exceeds GitHub's 100 MB limit); regenerate from the zip in
-a few minutes. Keep it to re-sample without re-reading 8.54 GB.
-
----
-
-## Reproducing
+## Setup
+
+**Use a dedicated virtual environment for this project.** Installing `mcp[cli]`
+into a Python environment shared with other projects broke an unrelated
+project's `fastapi` install during development (`mcp`'s `FastMCP` hard-imports
+SSE transport support, which pulled in a `starlette` version incompatible with
+`fastapi`'s pin) - a real conflict, not a hypothetical one. An isolated venv
+avoids it entirely.
 
 ```bash
-pip install pandas numpy scikit-learn matplotlib openai python-dotenv
+git clone https://github.com/namitjain123/financeservice-customer-insight.git
+cd financeservice-customer-insight
 
-# 1. Download complaints.csv.zip from
-#    https://www.consumerfinance.gov/data-research/consumer-complaints/
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # macOS/Linux
 
-# 2. Extract the working pool (~5 min)
-python scripts/extract_from_bulk.py --zip path/to/complaints.csv.zip --out data/cfpb_filtered.csv
-
-# 3. Build the sample
-python scripts/prepare_cfpb.py --raw data/cfpb_filtered.csv --out ./data
+pip install -r requirements.txt
 ```
 
-Both scripts use `--seed 42`, so runs are reproducible.
+Get a free Gemini API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey),
+then:
 
-Useful flags:
+```bash
+copy .env.example .env        # Windows
+# cp .env.example .env        # macOS/Linux
+# edit .env, set GEMINI_API_KEY
+```
 
-| Flag | Default | Purpose |
-|---|---|---|
-| `--cr-fraction` | `0.03` | credit-reporting share of the pool (`1.0` = all, `0` = exclude) |
-| `--min-date` | `2023-01-01` | pool start date |
-| `--target` | `3000` | working-set size |
-| `--holdout` | `200` | eval slice size |
-| `--max-words` | `400` | truncation limit |
+---
 
-### `scripts/silhouette_check.py`
+## Usage
 
-Justifies the number of clusters `k` rather than assuming it. Embeds unique topic phrases
-once (cached to `.npz`, so a 24-value sweep costs one API call), sweeps k, and reports mean
-silhouette under **cosine** distance — Euclidean degrades badly in 1536 dimensions, and
-OpenAI embeddings are unit-normalised. Also emits the per-cluster silhouette diagram, which
-shows *which* cluster is poor rather than only whether `k` is.
+### Run the full pipeline
+
+```bash
+python main.py            # all 3,000 rows in data/input.csv
+python main.py 30         # smoke test on the first 30 rows only - do this first
+```
+
+Always test on a small number before a full run. Steps 1 and 3 make real LLM
+API calls; Gemini's free tier is rate-limited (~15 requests/minute on some
+models as of 2026-07), so a full 3,000-row run takes a while and is worth
+verifying end-to-end on 30 rows first.
+
+Each step prints its own real return value - row counts, cluster sizes, token
+usage - not a narrated summary. This is deliberate: seeing exactly what each
+step did, from the step itself, is what catches a step silently doing the
+wrong thing.
+
+### Run one step at a time
+
+```bash
+python -m tools.topic_extraction 50      # first 50 rows only
+python -m tools.topic_clustering 12      # k=12 clusters
+python -m tools.cluster_labelling
+python -m tools.business_insight 5       # top 5 themes per chart
+```
+
+### Evaluate the clustering against ground truth
+
+```bash
+python -m eval.cluster_eval              # ARI, NMI, per-cluster purity
+python -m eval.choose_k 2 30             # sweep k=2..30, pick best by ARI (not silhouette)
+```
+
+`choose_k.py` reuses the cached embeddings from the last clustering run, so
+sweeping 30 values of k costs zero additional API calls.
+
+### Two ways to run it: sequential calls vs. an Agent deciding
+
+`main.py`'s default path is four plain `await` calls, in order:
+
+```python
+history = [
+    {"step": "extract_topics", **await extract_topics()},
+    {"step": "cluster_topics", **cluster_topics()},
+    {"step": "label_clusters", **await label_clusters()},
+    {"step": "generate_insights", **generate_insights()},
+]
+```
+
+No framework needed to express "do these four things in order" - the pipeline
+never branches, so there's no decision for an LLM or a workflow graph to make.
+
+`orchestration/agent_pipeline.py` is an alternative, closer to the original
+version of this project (which used AutoGen's `AssistantAgent` + a system
+prompt): one `Agent`, a short system prompt, and the four tools as
+LLM-callable functions - the agent decides when to call each one. It's
+included for comparison, not used by default, because it reintroduces a real
+risk: the agent's own narration is not the same as what actually happened. In
+an earlier version of this project, exactly this pattern produced an agent
+that announced *"1,000 responses processed (for example)"* against a 100-row
+file. `main.py`'s sequential version can't do that - there's no narration,
+only real return values.
+
+```bash
+python -c "import asyncio; from orchestration.agent_pipeline import run_agent_pipeline; print(asyncio.run(run_agent_pipeline()))"
+```
+
+### Run the MCP server
+
+`MCP/server.py` exposes the four tools over the Model Context Protocol, so any
+MCP-compatible client (Claude Desktop, VS Code Copilot, another agent) can
+discover and call them without importing this codebase. It does not change
+how `main.py` runs the pipeline - it's a second, optional way to reach the
+same four functions, for external consumers.
+
+```bash
+python MCP/server.py                  # stdio server
+mcp dev MCP/server.py                 # opens the MCP Inspector for interactive testing
+```
+
+MCP adds real overhead per call (JSON-RPC serialization over a subprocess
+pipe, versus a microsecond in-process function call) - it's not used for
+performance. It's there because a scenario like "let Claude Desktop drive
+this pipeline" needs a standard protocol, and a direct Python import can't
+serve a non-Python, non-this-codebase caller.
+
+---
+
+## The four steps
+
+### Step 1 - Topic extraction (`tools/topic_extraction.py`)
+
+Sends each complaint's narrative to Gemini, asks for 2-5 specific, actionable
+topic phrases plus sentiment. *"Bad service"* is rejected by the prompt in
+favour of *"Repeated failed dispute investigation"* - vague topics are what
+produced a single cluster covering a third of all complaints in an earlier,
+less careful version of this pipeline.
+
+- **Concurrent**, not serial (`EXTRACTION_CONCURRENCY`, default 4)
+- **Model fallback chain**: `gemini-3.5-flash-lite` → `gemini-3.1-flash-lite` →
+  `gemini-flash-lite-latest`, so one model's rate limit doesn't stall the run
+- **Checkpointed** every 100 rows and **resumable** - a crash partway through
+  costs at most one checkpoint's worth of API calls, not the whole run
+
+### Step 2 - Topic clustering (`tools/topic_clustering.py`)
+
+Embeds every unique topic phrase (`gemini-embedding-001`), L2-normalises the
+vectors so Euclidean KMeans behaves as cosine clustering, and groups them.
+Embeddings are cached to disk - re-clustering at a different k costs zero
+additional API calls.
+
+`k` defaults to 12 (`config/settings.py`) but that default is provisional.
+See [Evaluation](#evaluating-the-clustering) below - the point of this project
+is not trusting that number without checking it.
+
+### Step 3 - Cluster labelling (`tools/cluster_labelling.py`)
+
+Shows each cluster's topic phrases to Gemini, asks for a short business-facing
+name (*"Inadequate dispute investigation"*, not a repeated topic phrase), then
+explodes the data to one row per topic - a complaint with 3 topics becomes 3
+rows, the long format BI tools expect.
+
+### Step 4 - Business insights (`tools/business_insight.py`)
+
+No LLM calls - pure pandas/matplotlib over Step 3's output. Four charts:
+
+1. **Top N pain points** - which themes come up most often
+2. **Pain points by product** - heatmap of theme × product counts
+3. **Theme severity by sentiment** - see the caveat below
+4. **Theme trends over time** - monthly mentions for the top themes
+
+---
+
+## Evaluating the clustering
+
+This is what separates the project from "ran an LLM pipeline, made some
+charts." `eval/cluster_eval.py` compares the pipeline's own clusters against
+the real CFPB `Issue` labels it never saw:
+
+```
+Adjusted Rand Index (ARI)         do my clusters group the same complaints
+                                   together that the real taxonomy does?
+                                   0 = random, 1 = perfect agreement
+
+Normalized Mutual Info (NMI)      how much does knowing my cluster tell you
+                                   about the true label?
+
+Per-cluster purity                within one predicted cluster, what fraction
+                                   share the same true Issue? Flags "junk
+                                   drawer" clusters spanning many true labels.
+```
+
+`eval/choose_k.py` sweeps a range of `k` and scores each value by ARI against
+ground truth - not by silhouette. Silhouette only measures geometric
+separation and has no way to know what a *correct* cluster looks like.
+
+**Current honest state (300-row run, real result - not a mechanism check):**
+
+```
+n_complaints_evaluated: 300     n_true_issues: 54     n_predicted_clusters: 12
+ARI:  0.105        NMI: 0.437        mean cluster purity: 0.239
+```
+
+`choose_k.py` was swept from k=4 to k=70 on this same run (cached embeddings,
+zero extra API calls). ARI stayed in a narrow 0.05-0.12 band across the
+*entire* range - k=62 (the best found) scored only 0.121, barely above k=12's
+0.105, while NMI's steady climb with k (0.28 -> 0.61) is an expected artifact
+of k approaching the true category count, not independent evidence of better
+clustering. **The conclusion is that k is not the bottleneck here** - raising
+it 5x bought almost nothing, so k=12 remains the right choice: comparable ARI
+to any other value tried, and a 12-theme chart is one an executive can
+actually read, unlike a 62-theme one.
+
+A weak-but-real ARI (as opposed to the ~0 you'd get from random assignment)
+at this sample size is more likely explained by the ground truth itself than
+by the clustering: `Issue` is chosen by the *consumer* from a dropdown at
+filing, not assigned by an expert who read the narrative, which caps how well
+any clustering can agree with it - and 300 complaints across 54 true
+categories is still only ~5-6 examples per category, thin for reliably
+separating 54-way structure. A larger run (1,000+ rows) would tighten that
+estimate; it's unlikely to change the k=12-is-fine conclusion.
+
+---
+
+## Provider configuration
+
+Google Gemini, reached through its OpenAI-compatible endpoint - the standard
+`openai` Python package works unchanged, only the base URL, key, and model
+names differ (`config/settings.py`, `models/llm_client.py`). Switching
+providers is a few environment variables, not a rewrite:
+
+```bash
+# .env - Groq instead of Gemini
+GEMINI_BASE_URL=https://api.groq.com/openai/v1
+GEMINI_API_KEY=<your groq key>
+CHAT_MODEL=llama-3.3-70b-versatile
+EMBED_MODEL=nomic-embed-text-v1_5
+
+# .env - OpenAI instead of Gemini
+GEMINI_BASE_URL=https://api.openai.com/v1
+GEMINI_API_KEY=<your openai key>
+CHAT_MODEL=gpt-4o-mini
+EMBED_MODEL=text-embedding-3-small
+```
 
 ---
 
 ## Known limitations
 
-**The sample is balanced, not representative.** Debt collection is ~33% of real complaints
-but 9% here. Deliberate — it stops one category dominating the clustering — but "top pain
-points" charts built on this reflect category *diversity*, not real-world *frequency*.
-Report true frequencies separately from `cfpb_filtered.csv`.
+**The sample is balanced, not representative.** `data.md` explains the
+sampling in full - short version: real-world complaint volume by product is
+not preserved, so the "top pain points" chart reflects category *diversity* in
+the sample, not real-world *frequency*.
 
-**`channel` is constant.** Every row is `Web`, because narratives require online consent at
-submission. The column is unusable as an analysis dimension; use `company` or `state`
-instead.
+**Sentiment is structurally almost all negative.** Every row originates from a
+complaint - nobody files one to say they're happy. Chart 3 still shows
+*relative* severity between themes, but will never show one reading as mostly
+positive. A stronger severity signal would use CFPB's `Company response to
+consumer` field (e.g. *"Closed with monetary relief"* vs *"Closed with
+explanation"*), which is not currently in `data/input.csv` - see `data.md`.
 
-**Ground truth is consumer-selected, not expert-adjudicated.** `Issue` is chosen by the
-complainant from a dropdown at filing — not assigned by someone who read the narrative. It
-is noisy ground truth. Better than none, but any metric computed against it should carry
-that caveat.
+**Ground truth is consumer-selected, not expert-adjudicated.** `Issue` is
+chosen by the complainant from a dropdown at filing, not assigned by someone
+who read the narrative. It's noisy ground truth - better than none, but any
+ARI/NMI number should carry that caveat.
 
-**Redaction artefacts survive cleaning.** `[REDACTED]`, `[DATE]` and `[AMOUNT]` remain in
-the text by design — collapsed to single tokens rather than removed, so sentence structure
-stays intact. They will appear in embeddings.
+**`k=12` has been checked, not just assumed** - a 300-row sweep from k=4 to
+k=70 found no value that meaningfully beats it on ARI (see Evaluation above).
+It could still shift on a much larger run, but there's no evidence yet that
+it should.
 
-**Credit reporting is 3% of its true pool volume.** Fine for a balanced sample, but do not
-compute population statistics from `cfpb_filtered.csv` without accounting for it.
-
-**Issue coverage is uneven.** 79 labels across 3,000 rows averages ~38 examples each, but
-the distribution is skewed and tail issues are thin for evaluation. If that hurts your
-metrics, stratify on `Issue` rather than `Product`.
+**MCP adds latency, not speed.** See [Run the MCP server](#run-the-mcp-server)
+above - it exists for external tool access, not performance.

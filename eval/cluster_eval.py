@@ -88,8 +88,21 @@ def evaluate_clusters(
 
     # A cluster spanning many distinct true issues at low purity is the
     # junk-drawer failure mode - flag it by name, don't bury it in an average.
+    #
+    # The distinct-issue bar has to scale with how many true categories exist.
+    # A fixed ">= 5" was fine when ground truth had ~22 issues, but with 54
+    # true issues spread over only 12 clusters, fair division alone puts
+    # ~4.5 issues in every cluster - a fixed "5" then fires on nearly
+    # everything regardless of quality, and a flag that fires on 10 of 12
+    # clusters has stopped telling you anything. Flag only clusters that are
+    # unusually diffuse relative to that fair-division baseline, not ones
+    # merely at it.
+    n_true_issues = merged["Issue"].nunique()
+    n_clusters = len(cluster_map)
+    diversity_threshold = max(5, round(2 * n_true_issues / n_clusters))
     junk_drawers = cluster_map[
-        (cluster_map["distinct_true_issues"] >= 5) & (cluster_map["purity"] < 0.3)
+        (cluster_map["distinct_true_issues"] >= diversity_threshold)
+        & (cluster_map["purity"] < 0.3)
     ]
 
     return {

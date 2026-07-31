@@ -14,7 +14,8 @@ system prompt (closer to the original project's design, at the cost of that
 same narration risk), see orchestration/agent_pipeline.py.
 
 Usage:
-    python main.py
+    python main.py            # full run, all rows in data/input.csv
+    python main.py 30         # smoke test on the first 30 rows only
 """
 
 from __future__ import annotations
@@ -28,9 +29,9 @@ from tools.topic_clustering import cluster_topics
 from tools.topic_extraction import extract_topics
 
 
-async def main() -> None:
+async def main(limit: int | None = None) -> None:
     history = [
-        {"step": "extract_topics", **await extract_topics()},
+        {"step": "extract_topics", **await extract_topics(limit=limit)},
         {"step": "cluster_topics", **cluster_topics()},
         {"step": "label_clusters", **await label_clusters()},
         {"step": "generate_insights", **generate_insights()},
@@ -44,4 +45,7 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    import sys
+
+    row_limit = int(sys.argv[1]) if len(sys.argv) > 1 else None
+    asyncio.run(main(limit=row_limit))

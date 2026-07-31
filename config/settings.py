@@ -45,11 +45,21 @@ CHAT_MODEL_FALLBACKS = [
     ).split(",")
     if m.strip()
 ]
-EMBED_MODEL = os.getenv("EMBED_MODEL", "gemini-embedding-001")
-
-# gemini-embedding-001 defaults to 3072 dimensions. 1536 clusters just as well
-# for this many topic phrases and halves the memory and distance-computation cost.
-EMBED_DIMENSIONS = int(os.getenv("EMBED_DIMENSIONS", "1536"))
+# --- embeddings: a separate provider from chat -----------------------------
+# Gemini's free-tier embedding quota is a hard DAILY cap (not per-minute),
+# with a reset time that doesn't line up with local midnight - once it's
+# gone, no amount of retrying that day helps. Chat/topic-extraction has its
+# own separate quota and is unaffected, so only embeddings need to move.
+#
+# Voyage AI's dimension parameter is natively "output_dimension", not
+# "dimensions" - since it's unconfirmed whether their OpenAI-compat layer
+# translates the OpenAI SDK's "dimensions" kwarg correctly, EMBED_DIMENSIONS
+# is deliberately left unset here rather than guessed at; the model's own
+# default (1024 for voyage-4-lite) is used instead.
+EMBED_API_KEY = os.getenv("VOYAGE_API_KEY")
+EMBED_BASE_URL = os.getenv("EMBED_BASE_URL", "https://api.voyageai.com/v1")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "voyage-4-lite")
+EMBED_DIMENSIONS = int(os.getenv("EMBED_DIMENSIONS", "0")) or None
 
 # --- pipeline files ---------------------------------------------------------
 INPUT_CSV = DATA / "input.csv"
@@ -93,3 +103,13 @@ def require_api_key() -> str:
             "Get one free at https://aistudio.google.com/apikey"
         )
     return API_KEY
+
+
+def require_embed_api_key() -> str:
+    """Fail loudly before burning a clustering run's checkpointed progress."""
+    if not EMBED_API_KEY:
+        raise RuntimeError(
+            "VOYAGE_API_KEY is not set. Copy .env.example to .env and add your key.\n"
+            "Get one free (no payment method needed) at https://dash.voyageai.com"
+        )
+    return EMBED_API_KEY

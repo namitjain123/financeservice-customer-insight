@@ -14,3 +14,4 @@ venv/
 .venv/
 data/input.csv
 data/ground_truth.csv
+artifacts/

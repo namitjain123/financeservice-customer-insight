@@ -7,14 +7,18 @@ python-dotenv>=1.0
 streamlit>=1.35
 
 # Optional - only needed for orchestration/agent_pipeline.py, the alternative
-# where a single Agent decides step order from a system prompt (closer to the
-# original project's AutoGen design). main.py's default path is four plain
-# sequential function calls and does not need this dependency at all.
+# where a single Agent decides step order from a system prompt. main.py's
+# default path is four plain sequential function calls and does not need
+# this dependency at all.
 #
-# Microsoft Agent Framework, the successor to AutoGen + Semantic Kernel.
-# Deliberately NOT the `agent-framework` meta-package - it pulls in
-# agent-framework-core[all], dragging in copilotstudio/devui/azure connectors
-# we don't use and making pip's resolver crawl through dozens of prerelease
-# versions of each.
-agent-framework-core>=1.8
-agent-framework-openai>=1.8
+# AutoGen - same framework the original project's agents/SurveyInsightAgent.py
+# used (AssistantAgent + OpenAIChatCompletionClient), so tool functions can be
+# passed directly without wrapping them for a different SDK's Agent class.
+autogen-agentchat>=0.7
+autogen-ext[openai]>=0.7
+
+# Optional - only needed for MCP/server.py, which exposes the four tools over
+# the Model Context Protocol so external clients (Claude Desktop, VS Code
+# Copilot, other agents) can call them without importing this codebase.
+# main.py does not use this - it calls the tool functions directly.
+mcp[cli]>=1.28
