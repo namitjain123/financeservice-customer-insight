@@ -11,8 +11,11 @@ and without needing to import Python at all.
 Run standalone:
     python MCP/server.py
 
-Or drive it via agent_pipeline.py using MCPStdioTool instead of direct
-function references - see orchestration/agent_pipeline.py for that wiring.
+orchestration/agent_pipeline.py does NOT use this server - it wires the same
+four tool functions directly into an AutoGen AssistantAgent in-process,
+which is simpler when the caller is already Python in the same codebase.
+This server is for callers that aren't: a separate process, a different
+language, or a client (Claude Desktop, VS Code Copilot) that only speaks MCP.
 """
 
 from __future__ import annotations
@@ -42,8 +45,7 @@ mcp = FastMCP(
     ),
 )
 
-# FastMCP builds each tool's schema from the function's own signature and
-# docstring - the same docstrings tools/*.py already had, not rewritten here.
+
 mcp.tool()(extract_topics)
 mcp.tool()(cluster_topics)
 mcp.tool()(label_clusters)

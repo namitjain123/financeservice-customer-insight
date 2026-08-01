@@ -25,6 +25,11 @@ Two ground-truth granularities to sweep against - pick with a trailing arg:
             target for a small k, since it doesn't ask 12 clusters to resolve
             distinctions finer than the k you're actually choosing.
 
+Also computes the classic elbow method (inertia/WCSS vs k) alongside ARI and
+saves both as one plot to artifacts/plot_elbow_k_selection.png - included for
+comparison, not because it's what k gets picked by here. See plot_elbow()'s
+docstring for why the elbow is shown but not trusted.
+
 Usage:
     python -m eval.choose_k                       # sweep k=2..30 against Issue
     python -m eval.choose_k 5 40 2                 # sweep k=5..40 step 2 against Issue
@@ -33,6 +38,7 @@ Usage:
 
 from __future__ import annotations
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
@@ -95,9 +101,8 @@ def sweep(
         if k >= len(ids):
             continue
 
-        labels = KMeans(
-            n_clusters=k, random_state=settings.RANDOM_SEED, n_init=10
-        ).fit_predict(embeddings)
+        km = KMeans(n_clusters=k, random_state=settings.RANDOM_SEED, n_init=10)
+        labels = km.fit_predict(embeddings)
 
         pred_cluster = labels[scorable.to_numpy()]
         true_issue = true_labels[scorable].tolist()
@@ -106,11 +111,77 @@ def sweep(
         ari = adjusted_rand_score(true_issue, pred_cluster)
         nmi = normalized_mutual_info_score(true_issue, pred_cluster)
 
-        rows.append({"k": k, "silhouette": round(sil, 4),
-                     "ari": round(ari, 4), "nmi": round(nmi, 4)})
-        print(f"  k={k:<3} silhouette={sil:+.4f}   ARI={ari:+.4f}   NMI={nmi:.4f}")
+        rows.append({"k": k, "silhouette": round(sil, 4), "ari": round(ari, 4),
+                     "nmi": round(nmi, 4), "inertia": round(float(km.inertia_), 2)})
+        print(f"  k={k:<3} silhouette={sil:+.4f}   ARI={ari:+.4f}   "
+              f"NMI={nmi:.4f}   inertia={km.inertia_:,.1f}")
 
     return pd.DataFrame(rows)
+
+
+def _estimate_elbow(ks: np.ndarray, values: np.ndarray) -> int:
+    """Kneedle-style elbow: the k farthest from the straight line joining
+    the curve's two endpoints, after scaling both axes to [0, 1] so k's
+    small range and inertia's large one don't distort "farthest."
+
+    This is a heuristic, not a formula with one correct answer - a curve
+    that declines smoothly with no sharp bend has no clean elbow, and this
+    will still return *a* k, just not necessarily a meaningful one. Read it
+    alongside the plot, not as a number to trust blindly.
+    """
+    x = (ks - ks.min()) / (ks.max() - ks.min())
+    y = (values - values.min()) / (values.max() - values.min())
+    x1, y1, x2, y2 = x[0], y[0], x[-1], y[-1]
+    # Perpendicular distance from each point to the line through the endpoints.
+    num = np.abs((y2 - y1) * x - (x2 - x1) * y + x2 * y1 - y2 * x1)
+    den = np.hypot(y2 - y1, x2 - x1)
+    distances = num / den
+    return int(ks[np.argmax(distances)])
+
+
+def plot_elbow(results: pd.DataFrame, output_path=None) -> str:
+    """Save the elbow plot (inertia vs k), next to ARI vs k for contrast.
+
+    Elbow method: inertia is the within-cluster sum of squares -
+        WCSS(k) = sum over every point x of ||x - centroid(x)||^2
+    where centroid(x) is the center of whichever of the k clusters x landed
+    in. WCSS always falls as k grows (more clusters can only fit the data
+    at least as well), so there's no single "correct" k to read off it -
+    only a point where it stops falling fast, the "elbow."
+
+    Plotted next to ARI, not instead of it, because the elbow is purely
+    geometric - like silhouette (see this module's docstring), it has no
+    way to know whether a cluster corresponds to a real category, only
+    whether points sit tightly around their centroid. It can point at a k
+    that looks tidy in embedding space while still poorly matching CFPB's
+    real categories - which is exactly why ARI, not this, is what
+    eval/choose_k.py and eval/cluster_eval.py actually select k by.
+    """
+    output_path = output_path or (settings.ARTIFACTS / "plot_elbow_k_selection.png")
+    ks = results["k"].to_numpy()
+
+    elbow_k = _estimate_elbow(ks, results["inertia"].to_numpy())
+    best_ari_k = int(results.loc[results["ari"].idxmax(), "k"])
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5))
+
+    ax1.plot(ks, results["inertia"], marker="o", color="darkorange")
+    ax1.axvline(elbow_k, color="crimson", linestyle="--", label=f"elbow k={elbow_k}")
+    ax1.set(xlabel="k", ylabel="inertia (within-cluster sum of squares)",
+            title="Elbow method - geometric only, no ground truth")
+    ax1.legend()
+
+    ax2.plot(ks, results["ari"], marker="o", color="#4C78A8")
+    ax2.axvline(best_ari_k, color="crimson", linestyle="--", label=f"best ARI k={best_ari_k}")
+    ax2.set(xlabel="k", ylabel="Adjusted Rand Index",
+            title="ARI vs real CFPB categories - what this project trusts")
+    ax2.legend()
+
+    fig.suptitle("k selection: geometric heuristic vs ground-truth-aware score")
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=150)
+    plt.close(fig)
+    return str(output_path)
 
 
 if __name__ == "__main__":
@@ -136,11 +207,17 @@ if __name__ == "__main__":
 
     best_ari = results.loc[results["ari"].idxmax()]
     best_sil = results.loc[results["silhouette"].idxmax()]
+    elbow_k = _estimate_elbow(results["k"].to_numpy(), results["inertia"].to_numpy())
 
     print(f"\nbest k by ARI (agreement with real taxonomy): k={int(best_ari.k)}  "
           f"(ARI={best_ari.ari}, silhouette was {best_ari.silhouette})")
     print(f"best k by silhouette (geometric separation):   k={int(best_sil.k)}  "
           f"(silhouette={best_sil.silhouette}, ARI was {best_sil.ari})")
+    print(f"elbow k by inertia (geometric, no ground truth): k={elbow_k}  "
+          f"(ARI at that k was {results.loc[results['k'] == elbow_k, 'ari'].iloc[0]})")
     if best_ari.k != best_sil.k:
-        print("\nThe two disagree - use the ARI-selected k. Silhouette has no "
-              "way to know what a 'correct' cluster looks like; ARI does.")
+        print("\nThe three can disagree - use the ARI-selected k. Silhouette and the "
+              "elbow have no way to know what a 'correct' cluster looks like; ARI does.")
+
+    plot_path = plot_elbow(results)
+    print(f"\nelbow plot saved to {plot_path}")

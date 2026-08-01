@@ -1,14 +1,22 @@
 """Web UI for the pipeline. Same shape as the original project's Streamlit app,
-adapted for this schema and rewritten around two things that changed since:
+adapted for this schema and rewritten around three things that changed since:
 
   * Progress is shown from each step's REAL return value, not streamed agent
     narration. The original streamed `team.run_stream()` text - exactly the
     mechanism that, in an earlier version of this project, let an agent
     announce "1,000 responses processed (for example)" against a 100-row
     file. main.py doesn't trust narration; neither does this UI.
-  * Eval results are shown after a run on the built-in dataset. Comparing
-    the pipeline's clusters against real CFPB `Issue` labels is this
-    project's actual differentiator - the original had no equivalent,
+  * Results and evaluation are read from whatever's already on disk in
+    artifacts/, not gated behind "did you click Run in this exact browser
+    session." A CLI run (python main.py / python -m tools.topic_clustering)
+    populates the same files this UI reads - reopening the page should show
+    them immediately, not force a costly re-run just to look at what's
+    already there.
+  * Evaluation lets you pick which real CFPB label to score clusters
+    against - the fine-grained `Issue` field or the coarser `product` field
+    - since they measure different things and neither alone is the full
+    picture. Comparing the pipeline's clusters against real labels at all is
+    this project's actual differentiator - the original had no equivalent,
     because its dataset had no ground truth to check against.
 
 Run with:
@@ -47,7 +55,6 @@ source = st.radio(
 )
 
 input_csv = settings.INPUT_CSV
-run_eval_after = False
 
 if source.startswith("Built-in"):
     if not input_csv.exists():
@@ -73,7 +80,6 @@ if source.startswith("Built-in"):
             "smallest size verified end-to-end if you want a fast check first."
         ),
     )
-    run_eval_after = True
 
 else:
     uploaded = st.file_uploader("CSV with a 'narrative' column", type=["csv"])
@@ -111,97 +117,133 @@ st.subheader("2. Run")
 
 if st.button("Run pipeline", type="primary"):
 
-    async def run_all() -> list[dict]:
-        history = []
+    async def run_all() -> None:
         with st.status("Step 1/4 - extracting topics...", expanded=True) as s:
             r = await extract_topics(input_csv=input_csv, limit=limit)
             st.json(r)
-            history.append({"step": "extract_topics", **r})
             s.update(label="Step 1/4 - extract_topics done", state="complete")
 
         with st.status("Step 2/4 - clustering topics...", expanded=True) as s:
             r = cluster_topics()
             st.json(r)
-            history.append({"step": "cluster_topics", **r})
             s.update(label="Step 2/4 - cluster_topics done", state="complete")
 
         with st.status("Step 3/4 - labelling clusters...", expanded=True) as s:
             r = await label_clusters()
             st.json(r)
-            history.append({"step": "label_clusters", **r})
             s.update(label="Step 3/4 - label_clusters done", state="complete")
 
         with st.status("Step 4/4 - generating charts...", expanded=True) as s:
             r = generate_insights()
             st.json(r)
-            history.append({"step": "generate_insights", **r})
             s.update(label="Step 4/4 - generate_insights done", state="complete")
 
-        return history
-
-    st.session_state["history"] = asyncio.run(run_all())
-    st.session_state["ran_on_builtin"] = run_eval_after
+    asyncio.run(run_all())
+    st.rerun()  # re-read the freshly written files from disk, same path as an existing run
 
 # --- results ---------------------------------------------------------------
-if "history" in st.session_state:
-    st.markdown("---")
-    st.subheader("3. Results")
+# Reads whatever's on disk in artifacts/ right now - populated either by
+# clicking "Run pipeline" above, or by a prior CLI run (python main.py,
+# python -m tools.topic_clustering, ...). Not gated behind session state, so
+# reopening this page shows existing results immediately, at zero cost.
+st.markdown("---")
+st.subheader("3. Results")
 
-    if settings.OUTPUT_CSV.exists():
-        out = pd.read_csv(settings.OUTPUT_CSV)
-        st.markdown(f"**{len(out):,} theme-tagged rows, {out['general_topic_l1'].nunique()} themes**")
+if settings.OUTPUT_CSV.exists():
+    out = pd.read_csv(settings.OUTPUT_CSV)
+    st.caption(f"From {settings.OUTPUT_CSV}, last written "
+               f"{pd.Timestamp.fromtimestamp(settings.OUTPUT_CSV.stat().st_mtime):%Y-%m-%d %H:%M}")
+    st.markdown(f"**{len(out):,} complaints, {out['general_topic_l1'].nunique()} themes**")
 
-        plots = [
-            ("Top pain points", settings.ARTIFACTS / "plot_top_pain_points.png"),
-            ("Pain points by product", settings.ARTIFACTS / "heatmap_pain_points_by_product.png"),
-            ("Theme severity by sentiment", settings.ARTIFACTS / "theme_severity_stacked.png"),
-            ("Theme trends over time", settings.ARTIFACTS / "theme_trends_over_time.png"),
-        ]
-        cols = st.columns(2)
-        for i, (title, path) in enumerate(plots):
+    plots = [
+        ("Top pain points", settings.ARTIFACTS / "plot_top_pain_points.png"),
+        ("Pain points by product", settings.ARTIFACTS / "heatmap_pain_points_by_product.png"),
+        ("Theme severity by sentiment", settings.ARTIFACTS / "theme_severity_stacked.png"),
+        ("Theme trends over time", settings.ARTIFACTS / "theme_trends_over_time.png"),
+    ]
+    cols = st.columns(2)
+    for i, (title, path) in enumerate(plots):
+        with cols[i % 2]:
+            st.markdown(f"**{title}**")
             if path.exists():
-                with cols[i % 2]:
-                    st.markdown(f"**{title}**")
-                    st.image(str(path), use_container_width=True)
+                st.image(str(path), use_container_width=True)
+            else:
+                st.info("Not generated yet - run Step 4 (generate_insights).")
 
-        st.markdown("---")
-        st.subheader("Enriched output")
-        st.dataframe(out.head(50))
-        st.download_button(
-            "Download output.csv",
-            data=out.to_csv(index=False),
-            file_name="output.csv",
-            mime="text/csv",
-        )
-    else:
-        st.warning("No output.csv found - Step 4 may not have completed.")
+    st.markdown("---")
+    st.subheader("Enriched output")
+    st.dataframe(out.head(50))
+    st.download_button(
+        "Download output.csv",
+        data=out.to_csv(index=False),
+        file_name="output.csv",
+        mime="text/csv",
+    )
+else:
+    st.info("No output.csv yet - run the pipeline above, or via the CLI (`python main.py`), to generate it.")
 
-    # --- evaluation, only meaningful against the built-in dataset's ground truth
-    if st.session_state.get("ran_on_builtin"):
-        st.markdown("---")
-        st.subheader("4. Evaluation against real CFPB categories")
-        st.caption(
-            "The clusters above were produced with no knowledge of the complaints' "
-            "real `Issue` labels. This compares them against those labels."
-        )
+# --- evaluation --------------------------------------------------------------
+# Reads artifacts/df_with_clusters.csv, same "already on disk" logic as
+# above - independent of the pipeline run button, and free to re-run (no API
+# calls, just re-scoring an existing clustering against a chosen ground
+# truth), so switching between Issue/product doesn't cost anything.
+st.markdown("---")
+st.subheader("4. Evaluation against real CFPB categories")
+st.caption(
+    "The clusters above were produced with no knowledge of the complaints' real "
+    "category labels (clustering reads only `narrative` - see tools/topic_clustering.py). "
+    "This scores that already-finished clustering against a real label, chosen below."
+)
+
+if not settings.CLUSTERS_CSV.exists():
+    st.info("No clustered data yet - run at least through Step 2 above.")
+else:
+    from eval.choose_k import TRUTH_SOURCES
+
+    truth_choice = st.radio(
+        "Score against:",
+        list(TRUTH_SOURCES.keys()),
+        format_func=lambda t: {
+            "issue": "Issue (fine-grained - 60-80 specific problem types)",
+            "product": "product (coarse - 11 financial product categories)",
+        }.get(t, t),
+        horizontal=True,
+    )
+
+    if st.button("Run evaluation"):
         try:
             from eval.cluster_eval import evaluate_clusters
 
-            ev = evaluate_clusters()
-            n = ev["n_complaints_evaluated"]
-            c1, c2, c3 = st.columns(3)
-            c1.metric("Adjusted Rand Index", ev["adjusted_rand_index"])
-            c2.metric("Normalized Mutual Info", ev["normalized_mutual_info"])
-            c3.metric("Mean cluster purity", ev["mean_cluster_purity"])
-
-            if n < 200:
-                st.warning(
-                    f"Only {n} complaints were evaluated. ARI/NMI are unreliable "
-                    "below a few hundred examples spread across dozens of true "
-                    "categories - treat these numbers as a mechanism check, not "
-                    "a result. Re-run with more rows for a trustworthy score."
-                )
-            if ev["junk_drawer_clusters"]:
-                st.error(f"Junk-drawer clusters detected: {ev['junk_drawer_clusters']}")
+            ev = evaluate_clusters(truth=truth_choice)
+            st.session_state["eval_result"] = ev
         except Exception as exc:  # noqa: BLE001
-            st.info(f"Evaluation unavailable: {exc}")
+            st.error(f"Evaluation failed: {exc}")
+
+    ev = st.session_state.get("eval_result")
+    if ev and ev.get("truth") == truth_choice:
+        n = ev["n_complaints_evaluated"]
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Adjusted Rand Index", ev["adjusted_rand_index"])
+        c2.metric("Normalized Mutual Info", ev["normalized_mutual_info"])
+        c3.metric("Mean cluster purity", ev["mean_cluster_purity"])
+        st.caption(
+            f"Scored on {n:,}/{ev['n_complaints_total']:,} complaints "
+            f"({ev['n_categories_scored']}/{ev['n_categories_total']} categories - "
+            f"{ev['n_categories_excluded_as_sparse']} excluded for having fewer than "
+            f"{ev['min_category_support']} examples, which no unsupervised method could learn)"
+        )
+
+        if n < 200:
+            st.warning(
+                f"Only {n} complaints were evaluated. ARI/NMI are unreliable "
+                "below a few hundred examples spread across dozens of true "
+                "categories - treat these numbers as a mechanism check, not "
+                "a result. Re-run with more rows for a trustworthy score."
+            )
+        if ev["junk_drawer_clusters"]:
+            st.caption(
+                f"Junk-drawer clusters (unusually diffuse - see breakdown below): "
+                f"{ev['junk_drawer_clusters']}"
+            )
+        with st.expander("Per-cluster breakdown"):
+            st.dataframe(pd.DataFrame(ev["cluster_breakdown"]).sort_values("purity"))

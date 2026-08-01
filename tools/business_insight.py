@@ -5,16 +5,19 @@ No LLM calls here - pure pandas + matplotlib over the output of Step 3.
 Produces four plots:
   1) Top N Customer Pain Points       - which themes come up most often
   2) Pain Points by Product           - which products are driving which themes
-  3) Theme Severity by Sentiment      - how negative each theme skews
+  3) Neutral Share by Theme           - the one sentiment signal this data has
   4) Theme Trends Over Time           - are the top themes growing or shrinking
 
 Differences from the original survey pipeline this replaces:
   * column names match the CFPB schema (`date`, lowercase) instead of the
     original survey export's (`Date`)
-  * chart 3 explicitly flags a real limitation of this dataset: every row
-    here originates from a complaint, so sentiment skews overwhelmingly
-    negative - the chart still shows *relative* severity across themes, but
-    it will never show a theme that reads as mostly positive
+  * chart 3 was originally a stacked Negative/Neutral/Positive bar, on the
+    assumption sentiment would vary enough to show relative severity. Real
+    output showed otherwise: Positive is 0.0% for every theme (there's no
+    such thing as a positive complaint here) and Negative sits at 88-100%
+    for all of them - stacked on a 0-1 axis, every bar looked identical.
+    Rebuilt to plot the one dimension that actually varies (Neutral share),
+    see tools/business_insight.py's _theme_severity() docstring.
   * returns real per-chart row counts instead of a fixed "for example" claim
 """
 
@@ -23,7 +26,6 @@ from __future__ import annotations
 import json
 from typing import Any
 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -76,13 +78,18 @@ def _pain_points_by_product(df: pd.DataFrame) -> str:
 
 
 def _theme_severity(df: pd.DataFrame, top_themes: list[str]) -> str:
-    """100% stacked bar of sentiment share per theme.
+    """Negative and Neutral share per theme, each on its own labeled panel.
 
-    Every row here is drawn from a complaint, so sentiment is structurally
-    skewed negative (see the "Known limitations" note in the module
-    docstring). The chart is still meaningful for RELATIVE comparison - a
-    theme at 95% negative is more urgent than one at 60% - but do not expect
-    or claim any theme will read as predominantly positive.
+    Originally a single 0-1 stacked Negative/Neutral/Positive bar. Measured
+    against real output: Positive is 0.0% for every theme (every row here IS
+    a complaint - there's no such thing as a "positive complaint" in this
+    dataset, not just a rare one), so it's dropped from the plot rather than
+    drawn as a permanently-empty slice. Negative (88-100%) and Neutral
+    (0-11.5%) sit on wildly different scales - one shared 0-100% axis would
+    flatten Neutral back into invisibility, the exact problem that motivated
+    this rewrite - so each gets its own panel with its own y-range, and every
+    bar is labeled with its exact percentage rather than relying on the
+    reader to compare bar heights precisely.
     """
     counts = (
         df.groupby(["general_topic_l1", "customer_sentiment"])
@@ -90,23 +97,37 @@ def _theme_severity(df: pd.DataFrame, top_themes: list[str]) -> str:
         .unstack(fill_value=0)
         .reindex(columns=["Negative", "Neutral", "Positive"], fill_value=0)
     )
-    shares = counts.div(counts.sum(axis=1), axis=0).fillna(0)
+    shares = (counts.div(counts.sum(axis=1), axis=0).fillna(0) * 100)
     shares_top = shares.loc[[t for t in shares.index if t in top_themes]]
 
-    fig, ax = plt.subplots(figsize=(10, 6))
-    bottom = np.zeros(len(shares_top))
-    for sentiment in ("Negative", "Neutral", "Positive"):
-        values = shares_top[sentiment].values
-        ax.bar(shares_top.index, values, bottom=bottom, label=sentiment,
-               color=SENTIMENT_COLORS[sentiment])
-        bottom += values
+    fig, (ax_neg, ax_neu) = plt.subplots(1, 2, figsize=(14, 7))
 
-    ax.set_title("Theme Severity by Sentiment (Share)")
-    ax.set_ylabel("Share of Mentions")
-    ax.set_xlabel("Theme (Top)")
-    ax.legend(title="Sentiment")
-    plt.setp(ax.get_xticklabels(), rotation=30, ha="right")
-    fig.tight_layout()
+    for ax, sentiment in ((ax_neg, "Negative"), (ax_neu, "Neutral")):
+        series = shares_top[sentiment].sort_values(ascending=False)
+        ax.bar(series.index, series.values, color=SENTIMENT_COLORS[sentiment])
+        for i, v in enumerate(series.values):
+            ax.text(i, v, f"{v:.1f}%", ha="center", va="bottom", fontsize=9)
+        # Headroom for the label text above each bar - not capped at 100 even
+        # though the data itself can't exceed it, or a bar reaching exactly
+        # 100% has nowhere to put its own label and collides with the title.
+        ax.set_ylim(0, max(series.max() * 1.15, 5))
+        ax.set_title(f"{sentiment} Share by Theme")
+        ax.set_ylabel(f"Share of Mentions That Are {sentiment} (%)")
+        ax.set_xlabel("Theme (Top)")
+        plt.setp(ax.get_xticklabels(), rotation=30, ha="right")
+
+    fig.suptitle("Theme Severity by Sentiment")
+    # Reserve room below the rotated tick labels before placing the footnote
+    # in figure coordinates - anchoring to the axes (ax.transAxes) put this
+    # text at a fixed offset from the plot area, which the rotated labels'
+    # own height then ran straight into.
+    fig.tight_layout(rect=(0, 0.1, 1, 0.96))
+    fig.text(
+        0.5, 0.02,
+        "Positive sentiment is 0% for every theme in this data and is omitted above - "
+        "every row is a complaint, so there is no positive class to compare against.",
+        ha="center", fontsize=8, color="dimgray",
+    )
 
     path = str(settings.ARTIFACTS / "theme_severity_stacked.png")
     fig.savefig(path, dpi=150)
