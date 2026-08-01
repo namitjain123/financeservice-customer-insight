@@ -9,16 +9,17 @@ streamlit>=1.35
 # Optional - only needed for orchestration/agent_pipeline.py, the alternative
 # where a single Agent decides step order from a system prompt. main.py's
 # default path is four plain sequential function calls and does not need
-# this dependency at all.
+# either of these two dependencies at all.
 #
 # AutoGen - same framework the original project's agents/SurveyInsightAgent.py
-# used (AssistantAgent + OpenAIChatCompletionClient), so tool functions can be
-# passed directly without wrapping them for a different SDK's Agent class.
+# used (AssistantAgent + OpenAIChatCompletionClient).
 autogen-agentchat>=0.7
 autogen-ext[openai]>=0.7
 
-# Optional - only needed for MCP/server.py, which exposes the four tools over
-# the Model Context Protocol so external clients (Claude Desktop, VS Code
-# Copilot, other agents) can call them without importing this codebase.
-# main.py does not use this - it calls the tool functions directly.
+# MCP - exposes the four tools over the Model Context Protocol so external
+# clients (Claude Desktop, VS Code Copilot, other agents) can call them
+# without importing this codebase. main.py does not use this at all - it
+# calls the tool functions directly. orchestration/agent_pipeline.py DOES
+# use this (see that file's docstring for why - it's a deliberate demo of
+# the original project's design, not a recommendation).
 mcp[cli]>=1.28

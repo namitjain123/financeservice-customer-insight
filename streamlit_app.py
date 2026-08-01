@@ -36,6 +36,26 @@ from tools.cluster_labelling import label_clusters
 from tools.topic_clustering import cluster_topics
 from tools.topic_extraction import extract_topics
 
+def _scored_against_builtin_dataset() -> bool:
+    """Is the current clustering (artifacts/df_with_clusters.csv) from the
+    built-in CFPB dataset, or from an uploaded CSV?
+
+    Evaluation only means anything against complaint_ids CFPB actually
+    assigned - an uploaded file's ids (the uploader's own, or synthesized as
+    0, 1, 2, ... if it had none) essentially never overlap with
+    ground_truth.csv's real ones. Checked by data, not session state, so it
+    still works correctly after a page reload following a CLI run - the same
+    "read from disk" principle the rest of this UI follows.
+    """
+    if not settings.CLUSTERS_CSV.exists() or not settings.GROUND_TRUTH_CSV.exists():
+        return False
+    pred_ids = set(pd.read_csv(settings.CLUSTERS_CSV, usecols=[settings.ID_COLUMN])[settings.ID_COLUMN])
+    if not pred_ids:
+        return False
+    truth_ids = set(pd.read_csv(settings.GROUND_TRUTH_CSV, usecols=[settings.ID_COLUMN])[settings.ID_COLUMN])
+    return len(pred_ids & truth_ids) / len(pred_ids) > 0.5
+
+
 st.set_page_config(page_title="Complaint Insight Pipeline", layout="wide")
 st.title("Financial Services Customer Insights")
 st.markdown(
@@ -83,7 +103,6 @@ if source.startswith("Built-in"):
 
 else:
     uploaded = st.file_uploader("CSV with a 'narrative' column", type=["csv"])
-    limit = None
     if uploaded is None:
         st.info("Upload a CSV to continue.")
         st.stop()
@@ -99,6 +118,24 @@ else:
     st.success(f"{len(df):,} rows, column check passed")
     with st.expander("Preview"):
         st.dataframe(df.head(10))
+
+    # Same control as the built-in path - without it, this branch always
+    # processed the entire uploaded file with no way to limit it, which
+    # meant uploading a 3,000-row CFPB export re-ran extraction on rows
+    # already processed under the built-in path instead of reusing them.
+    limit = st.number_input(
+        "Rows to process",
+        min_value=5,
+        max_value=len(df),
+        value=min(300, len(df)),
+        step=5,
+        help=(
+            "Steps 1 and 3 call the Gemini API per row/cluster; the free tier is "
+            "rate-limited to roughly 15 requests/minute, so a large value will "
+            "take noticeably longer than a quick test - budget several minutes, "
+            "more if the model chain falls back under rate limiting."
+        ),
+    )
 
     # A separate working file, not data/input.csv - overwriting the curated
     # 3,000-row dataset (with its matching ground_truth.csv) to run an
@@ -197,6 +234,14 @@ st.caption(
 
 if not settings.CLUSTERS_CSV.exists():
     st.info("No clustered data yet - run at least through Step 2 above.")
+elif not _scored_against_builtin_dataset():
+    st.info(
+        "The current clustering wasn't run on the built-in CFPB dataset, so there's "
+        "no real ground truth to score it against - Issue/product labels only exist "
+        "for the built-in 3,000-row dataset (data/ground_truth.csv, data/input.csv), "
+        "not for an uploaded CSV's complaint_ids. Run the pipeline on the built-in "
+        "dataset above to see evaluation results."
+    )
 else:
     from eval.choose_k import TRUTH_SOURCES
 

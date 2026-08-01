@@ -52,7 +52,6 @@ def main() -> None:
 
         chunk = chunk[chunk[NARRATIVE].notna()]
 
-        # The bulk file mixes "2023-04-11" and "2023-04-11T09:07:47Z" in the same column.
         dates = pd.to_datetime(chunk["Date received"], errors="coerce", utc=True, format="mixed")
         chunk = chunk[dates >= pd.Timestamp(args.min_date, tz="UTC")]
 

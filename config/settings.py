@@ -82,7 +82,7 @@ PRODUCT_COLUMN = "product"
 
 # --- tunables ---------------------------------------------------------------
 MAX_TOPICS_PER_ROW = 5
-N_CLUSTERS = 12          # provisional; justify with eval/choose_k.py before trusting
+N_CLUSTERS = 12          # validated via eval/choose_k.py - see README's k-selection section
 CLUSTER_METRIC = "cosine"  # embeddings are unit-normalised
 TOP_N_THEMES = 5
 RANDOM_SEED = 42
